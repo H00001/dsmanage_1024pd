@@ -1,0 +1,38 @@
+this is a protocl of network control
+the stand is this:
+
+        +--------|----------------+--------+---------------------------------+--------------+                         |              |
+        | cli id |   messgae id   |  code  |             option              |   message    |
+        +--------+----------------+--------+---------------------------------+--------------+
+        |<- 1B ->|<-     2B     ->|<- 1B ->|<-             4B              ->|<-   1000B  ->|
+
+        cli id :client id ,every host has a unique id .             
+                it is calcluatored by mac address and unix t         --        --|==|
+                ime.                                                  \\  ==  // |  |
+        message id:create was created by server . the server           \\//\\//  |==
+                send the message id .when the client resonce         1 00  2 44
+                the control message ,use the same message id         1 00  2 44
+                to reply to the server.
+        code : message type
+                the message is defined follow:
+                        +-----+---+----------+---+---------+
+                        |  0  | 0 | responce | 1 | request |
+                        +-----+---+----------+---+---------+
+                        |  1  | 0 |          | 1 |  shell  |
+                        +-----+---+----------+---+---------+
+                        |  2  | 0 |          | 1 |         |
+                        +-----+---+----------+---+---------+
+                        |  3  | 0 |          | 1 |         |
+                        +-----+---+----------+---+---------+
+                        |  4  | 0 | succeed  | 1 |  fail   |
+                        +-----+---+----------+---+---------+
+                        |  5  | 0 |          | 1 |         |
+                        +-----+---+----------+---+---------+
+                        |  6  | 0 |          | 1 |         |
+                        +-----+---+----------+---+---------+
+                        |  7  | 0 |          | 1 |         |
+                        +-----+---+----------+---+---------+
+
+
+        message: message 
+
