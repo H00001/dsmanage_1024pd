@@ -22,9 +22,9 @@ int main(int argc, char** argv) {
 	}
 	else
 	{	
-    int socket_descriptor; 
-    int iter=0;
-    time_t t;
+                int socket_descriptor; 
+                int iter=0;
+                 time_t t;
 
     msg message;
     inint(&message);
@@ -33,7 +33,6 @@ int main(int argc, char** argv) {
     message.code = 3;
     message.messageid[1] = (time(0)/100) %254;
 
-    fgets (message.message, 999, stdin);
     struct sockaddr_in address;
 
     bzero(&address,sizeof(address));
@@ -41,8 +40,10 @@ int main(int argc, char** argv) {
     address.sin_addr.s_addr=inet_addr("127.0.0.1");//这里不一样
     address.sin_port=htons(port);
     socket_descriptor=socket(AF_INET,SOCK_DGRAM,0);
+    while(1){
+    fgets (message.message, 999, stdin);
     sendto(socket_descriptor,&message,sizeof(message),0,(struct sockaddr *)&address,sizeof(address));
-
+    }
     close(socket_descriptor);
     printf("Messages Sent,terminating\n");
 

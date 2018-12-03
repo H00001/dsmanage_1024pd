@@ -15,7 +15,6 @@ typedef struct __message__
 
 }msg;
 
-void writeMessage(msg * obj,char * _message_3c21);
+int writeMessage(msg * obj,char * _message_3c21);
 void clearMessage(msg * obj);
-
 void inint(msg* obj);

@@ -41,16 +41,19 @@ int main(int argc, char** argv) {
                 if((message.code&0x02)==2)
                 {
 	                cmd_system__0a40(message.message,resultbuffer,MESSAGELEN);
+                        printf("\tshell:%s]\n",message.message);
                         writeMessage(&message,resultbuffer);
                         message.code = 0;
-		        printf("\tshedll%s]\n",message.message);
                 }
                 else if((message.code&0x02)==0)
                 {
                        
                 }
 
-		isend("127.0.0.1",1024,&message);
+		if(isend("127.0.0.1",1024,&message)!=0)
+                {
+                        print_sw(DEBUG,PUTERR,"\nerror\n");
+                }
 	}
     }
 

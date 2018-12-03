@@ -17,31 +17,29 @@ int inint__cd23(int *socket_descriptor, struct sockaddr_in *sin)
    {
             return -2;
    }
-    return sin_len;
+   return sin_len;
 
 }
 
 void waittingforreceive()
 {
-    int sin_len;
-    msg message;
-    unsigned char buffer[MESSAGEIDLEN+OPTIONLEN+MESSAGELEN+3];
-    int socket_descriptor;
-    struct sockaddr_in sin;
-     printf("\nwait\n");
-    sin_len = inint__cd23(&socket_descriptor,&sin);
-    while(1)
-    {
-        recvfrom(socket_descriptor,&buffer,sizeof(buffer),0,(struct sockaddr *)&sin,&sin_len);
-        printf("reveved");
-        changeTomsg(buffer,&message);
-        printf("[\n\tclientid:%d\n",message.clientid);
-        if(message.code==1)
+        int sin_len;
+        msg message;
+        unsigned char buffer[MESSAGEIDLEN+OPTIONLEN+MESSAGELEN+3];
+        int socket_descriptor;
+        struct sockaddr_in sin;
+        sin_len = inint__cd23(&socket_descriptor,&sin);
+        while(1)
         {
-                printf("\n\ttype:resopnse\n");
-        }
-        printf("\tmessageid:%d%d\n",message.messageid[0],message.messageid[1]);
-        printf("\tResponse from server:%s\n]\n",message.message);
+                recvfrom(socket_descriptor,&buffer,sizeof(buffer),0,(struct sockaddr *)&sin,&sin_len);
+                changeTomsg(buffer,&message);
+                printf("[\n\tclientid:%d\n",message.clientid);
+                if(message.code==1)
+                {
+                        printf("\n\ttype:resopnse\n");
+                }
+                printf("\tmessageid:%d%d\n",message.messageid[0],message.messageid[1]);
+                printf("\tResponse from server:%s\n]\n",message.message);
     }
 
 
