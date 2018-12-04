@@ -37,20 +37,20 @@ void waittingforreceive()
                 printf("\tmessageid:%d%d\n",message.messageid[0],message.messageid[1]);
                 if((message.code&0x01)==0x00&&(message.code&0x10)==0x00)
                 {
-                        printf("\n\ttype:resopnse shell\n");
+                        printf("\ttype:resopnse shell\n");
                 }
                 if(message.code==0x02)
                 {
                 }
                 if(message.code==0x12)
                 {
-                        printf("\n\ttype:error cmd error\n");
+                        printf("\ttype:error cmd error\n");
                 }
                 if(message.code==0x32)
                 {
-                        printf("\n\ttype:message too long\n");
+                        printf("\ttype:message too long\n");
                 }
-                printf("\tResponse from client:%s",message.message);
+                printf("\tresponse:%s",message.message);
     }
 
 

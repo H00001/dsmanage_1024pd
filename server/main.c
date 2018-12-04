@@ -1,31 +1,19 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "oncesend.h"
-#include "utils/runcmd.h"
-#include "utils/udpsocket.h"
-#include <unistd.h>
-#include <fcntl.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <netdb.h>
-#define CLIENTID 1
+#include "stdafx.h"
+
 int port=6789;
 int main(int argc, char** argv) {
-    int sin_len;
-        int statuscode;
-    unsigned char resultbuffer[MESSAGELEN];
-    msg message;
-    unsigned char buffer[MESSAGEIDLEN+OPTIONLEN+MESSAGELEN+3];
-    int socket_descriptor;
-    struct sockaddr_in sin;
-    sin_len = inint__cd23(&socket_descriptor,&sin,port);
-    if(sin_len <0)
-    {
-	exit(-1);
-    }
-    printf("Waiting for data form sender \n");
+        int sin_len;
+        unsigned char resultbuffer[MESSAGELEN];
+        msg message;
+        unsigned char buffer[MESSAGEIDLEN+OPTIONLEN+MESSAGELEN+3];
+        int socket_descriptor;
+        struct sockaddr_in sin;
+        sin_len = inint__cd23(&socket_descriptor,&sin,port);
+        if(sin_len <0)
+        {
+	        exit(-1);
+        }
+        printf("Waiting for data form sender \n");
 
         while(1)
         {
@@ -44,19 +32,7 @@ int main(int argc, char** argv) {
 		printf("\ttype:request\n");
                 if((message.code&0x02)==2)
                 {
-	                statuscode = cmd_system__0a40(message.message,resultbuffer,MESSAGELEN);
-                        if(statuscode==0)
-                        {
-                                message.code = 0x02;
-                        }
-                        else if(statuscode == -3217)
-                        {
-                                message.code = 0x12;
-                        }
-                        else if(statuscode == 40)
-                        {
-                                message.code = 0x32;
-                        }
+                        writeValWithStatus(&message, cmd_system__0a40(message.message,resultbuffer,MESSAGELEN));
                         printf("\tshell:%s]\n",message.message);
                         writeMessage(&message,resultbuffer);
                 }
@@ -78,4 +54,20 @@ int main(int argc, char** argv) {
     return (EXIT_SUCCESS);
 }
 
+void writeValWithStatus(msg* __msg__, int status)
+{
+        if(status==0)
+        {
+                __msg__->code = 0x02;
+        }
+                        else if(status == -3217)
+                        {
+                                __msg__->code = 0x12;
+                        }
+                        else if(status == 40)
+                        {
+                                __msg__->code = 0x32;
+                        }
 
+
+}
