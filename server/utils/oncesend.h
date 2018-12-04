@@ -1,4 +1,4 @@
-#include "../sharelib/change.h"
+#include "../../sharelib/change.h"
 #include <string.h>
 #include <fcntl.h>
 #include <math.h>
@@ -11,6 +11,6 @@
 #include <time.h>
 #include <errno.h>
 
-#include "../sharelib/output.h"
+#include "../../sharelib/output.h"
 
 int isend(char * ip,int port,msg *message );
