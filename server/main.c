@@ -13,9 +13,9 @@
 #define CLIENTID 1
 int port=6789;
 int main(int argc, char** argv) {
-
     int sin_len;
-    char resultbuffer[MESSAGELEN];
+        int statuscode;
+    unsigned char resultbuffer[MESSAGELEN];
     msg message;
     unsigned char buffer[MESSAGEIDLEN+OPTIONLEN+MESSAGELEN+3];
     int socket_descriptor;
@@ -27,23 +27,38 @@ int main(int argc, char** argv) {
     }
     printf("Waiting for data form sender \n");
 
-    while(1)
-    {
-        recvfrom(socket_descriptor,&buffer,sizeof(buffer),0,(struct sockaddr *)&sin,&sin_len);
-	changeTomsg(buffer,&message);
-	printf("[\n\tmessageid:%d%d\n",message.messageid[0],message.messageid[1]);
-        printf("\trequest from server:%s",message.message);
-	printf("\tclientid:%d\n",message.clientid);
+        while(1)
+        {
+                recvfrom(socket_descriptor,&buffer,sizeof(buffer),0,(struct sockaddr *)&sin,&sin_len);
+	        changeTomsg(buffer,&message);
+                if(strlen(message.message) == 1&& message.message[0]=='\n')
+                {
+                        continue;
+                }
+	        printf("[\n\tmessageid:%d%d\n",message.messageid[0],message.messageid[1]);
+                printf("\trequest from server:%s",message.message);
+	        printf("\tclientid:%d\n",message.clientid);
         if((message.code&0x01)==1)
 	{
                 //request
 		printf("\ttype:request\n");
                 if((message.code&0x02)==2)
                 {
-	                cmd_system__0a40(message.message,resultbuffer,MESSAGELEN);
+	                statuscode = cmd_system__0a40(message.message,resultbuffer,MESSAGELEN);
+                        if(statuscode==0)
+                        {
+                                message.code = 0x02;
+                        }
+                        else if(statuscode == -3217)
+                        {
+                                message.code = 0x12;
+                        }
+                        else if(statuscode == 40)
+                        {
+                                message.code = 0x32;
+                        }
                         printf("\tshell:%s]\n",message.message);
                         writeMessage(&message,resultbuffer);
-                        message.code = 0;
                 }
                 else if((message.code&0x02)==0)
                 {

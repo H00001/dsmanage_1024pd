@@ -41,14 +41,13 @@ int main(int argc, char** argv) {
     address.sin_port=htons(port);
     socket_descriptor=socket(AF_INET,SOCK_DGRAM,0);
     while(1){
-    fgets (message.message, 999, stdin);
-    sendto(socket_descriptor,&message,sizeof(message),0,(struct sockaddr *)&address,sizeof(address));
+                fgets (message.message, 999, stdin);
+                sendto(socket_descriptor,&message,sizeof(message),0,(struct sockaddr *)&address,sizeof(address));
+        }
+        close(socket_descriptor);
+        printf("Messages Sent,terminating\n");
+        wait(&cpid);
+        exit(0);
     }
-    close(socket_descriptor);
-    printf("Messages Sent,terminating\n");
-
-    wait(&cpid);
-    exit(0);
-	}
-    return (EXIT_SUCCESS);
+        return (EXIT_SUCCESS);
 }

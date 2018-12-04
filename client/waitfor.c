@@ -33,13 +33,24 @@ void waittingforreceive()
         {
                 recvfrom(socket_descriptor,&buffer,sizeof(buffer),0,(struct sockaddr *)&sin,&sin_len);
                 changeTomsg(buffer,&message);
-                printf("[\n\tclientid:%d\n",message.clientid);
-                if(message.code==1)
-                {
-                        printf("\n\ttype:resopnse\n");
-                }
+                printf("\tclientid:%d\n",message.clientid);
                 printf("\tmessageid:%d%d\n",message.messageid[0],message.messageid[1]);
-                printf("\tResponse from server:%s\n]\n",message.message);
+                if((message.code&0x01)==0x00&&(message.code&0x10)==0x00)
+                {
+                        printf("\n\ttype:resopnse shell\n");
+                }
+                if(message.code==0x02)
+                {
+                }
+                if(message.code==0x12)
+                {
+                        printf("\n\ttype:error cmd error\n");
+                }
+                if(message.code==0x32)
+                {
+                        printf("\n\ttype:message too long\n");
+                }
+                printf("\tResponse from client:%s",message.message);
     }
 
 
