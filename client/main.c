@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
 
     bzero(&address,sizeof(address));
     address.sin_family=AF_INET;
-    address.sin_addr.s_addr=inet_addr("127.0.0.1");//这里不一样
+    address.sin_addr.s_addr=inet_addr("127.0.0.1");
     address.sin_port=htons(port);
     socket_descriptor=socket(AF_INET,SOCK_DGRAM,0);
     while(1){

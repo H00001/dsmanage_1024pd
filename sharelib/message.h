@@ -1,7 +1,7 @@
 #define __MESSAGE_H__
 #define MESSAGEIDLEN 2
 #define OPTIONLEN 4
-#define MESSAGELEN 1000
+#define MESSAGELEN 2000
 #include<string.h>
 #include<stdio.h>
 typedef unsigned char byte;

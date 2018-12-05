@@ -8,6 +8,7 @@ int  cmd_system__0a40(const char* command,unsigned char *__result__,int bufferle
 	       return errno;
         }
         memset(__result__,0,bufferlen);
+        
         if((flag=fread(__result__,1,bufferlen-1,fpRead))==bufferlen-1)
         {
                 return 40;
@@ -20,5 +21,6 @@ int  cmd_system__0a40(const char* command,unsigned char *__result__,int bufferle
                 return -3217;
         }
         return 0;
+        
 }
 

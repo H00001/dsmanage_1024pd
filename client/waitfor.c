@@ -35,22 +35,37 @@ void waittingforreceive()
                 changeTomsg(buffer,&message);
                 printf("\tclientid:%d\n",message.clientid);
                 printf("\tmessageid:%d%d\n",message.messageid[0],message.messageid[1]);
-                if((message.code&0x01)==0x00&&(message.code&0x10)==0x00)
+                if(message.messageid[0]==0&&message.messageid[1]==0)
                 {
-                        printf("\ttype:resopnse shell\n");
+                        if(message.code&0x08==0x08)
+                        {
+                                printf("\ttype:client has been shutdown\n");
+                        }
+                        else if(message.code&0x08==0x00)
+                        {
+                                printf("\ttype:client is alive\n");
+                        }
+
                 }
-                if(message.code==0x02)
+                else
                 {
+                        if((message.code&0x01)==0x00&&(message.code&0x10)==0x00)
+                        {
+                                printf("\ttype:resopnse shell\n");
+                        }
+                        if(message.code==0x02)
+                        {
+                        }
+                        if(message.code==0x12)
+                        {
+                                printf("\ttype:error cmd error\n");
+                        }
+                        if(message.code==0x32)
+                        {
+                                printf("\ttype:message too long\n");
+                        }
+                        printf("\tresponse:%s",message.message);
                 }
-                if(message.code==0x12)
-                {
-                        printf("\ttype:error cmd error\n");
-                }
-                if(message.code==0x32)
-                {
-                        printf("\ttype:message too long\n");
-                }
-                printf("\tresponse:%s",message.message);
     }
 
 
