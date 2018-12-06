@@ -48,7 +48,8 @@ void waittingforreceive()
                         else
                         {
                         }
-
+                        
+                        printf("\tresponse:%u%u%u\n",message.message[7],message.message[6],message.message[5]);
 
                 }
                 else

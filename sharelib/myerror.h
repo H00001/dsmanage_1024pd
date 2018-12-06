@@ -1,0 +1,2 @@
+#define _SHARELIB_MY_ERROR_
+#define __NULL_POINT_ERROR__ 1024

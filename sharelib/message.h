@@ -4,6 +4,9 @@
 #define MESSAGELEN 1000
 #include<string.h>
 #include<stdio.h>
+#include<time.h>
+#include<stdlib.h>
+#include "myerror.h"
 typedef unsigned char byte;
 typedef struct __message__
 {
@@ -20,3 +23,4 @@ void clearMessage(msg * obj);
 void inint(msg* obj);
 int writeAlive(msg *obj,int cliid);
 int writeDetch(msg *obj,int cliid);
+void __inline_long_put_bytes(msg *obj,long val);

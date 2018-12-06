@@ -1,8 +1,9 @@
 #include "stdafx.h"
+int sendConIno_(char *__ip,int __port, int type);
 int port=6789;
 int main(int argc, char** argv) {
 	twc tc;
-	readconfig("wd1024.conf",&tc);
+	readconfig("wd1024.conf",&tc); //read comfig file and setting the envoiment
         int sin_len;
 	int cli_pro_id;
         unsigned char buffer[MESSAGEIDLEN+OPTIONLEN+MESSAGELEN+3];
@@ -16,10 +17,8 @@ int main(int argc, char** argv) {
 	        exit(-1);
         }
         printf("Waiting for data form server \n");
-	msg inmsg;
-        writeAlive(&inmsg,0);
-        isend("127.0.0.1",1024,&inmsg);
-
+        
+        sendConIno_("",0,0);
         while(1)
         {
                 recvfrom(socket_descriptor,&buffer,sizeof(buffer),0,(struct sockaddr *)&sin,&sin_len);
@@ -32,10 +31,9 @@ int main(int argc, char** argv) {
 			printf("\nprocess:%d deal the message\n",cli_pro_id);
 		}
     	}
-    close(socket_descriptor);
-    exit(0);
-
-    return (EXIT_SUCCESS);
+        close(socket_descriptor);
+        exit(0);
+        return (EXIT_SUCCESS);
 }
 
 void signalHandel(int signo) {
@@ -47,28 +45,56 @@ void signalHandel(int signo) {
 	}
 	else if(signo==2)
 	{
-		msg exitmsg;
-                writeDetch(&exitmsg,0);
-		isend("127.0.0.1",1024,&exitmsg);
+                sendConIno_("",0,0);
 		exit(1);
 	}
     	return;
 
 }
+int sendConIno_(char *__ip,int __port, int type)
+{
+        msg *inmsg = (msg *)malloc(sizeof(msg));
+        if(inmsg==NULL)
+        {
+                return 2000;
+        }
+        switch(type)
+        {
+                case 0:
+                {
+                        writeAlive(inmsg,0);
+                        break;
+                }
+                case 1:
+                {
+
+                        writeDetch(inmsg,0);
+                        break;
+                }
+
+        }
+        int sendval = isend("127.0.0.1",1024,inmsg);
+        if(sendval!=0)
+        {
+               return sendval; 
+        }
+        free(inmsg);
+        return 0;
+}
 void writeValWithStatus(msg* __msg__, int status)
 {
-	        	if(status==0)
-        		{
-                		__msg__->code = 0x02;
-        		}
-                        else if(status == -3217)
-                        {
-                                __msg__->code = 0x12;
-                        }
-                        else if(status == 40)
-                        {
-                                __msg__->code = 0x32;
-                        }
+       	if(status==0)
+       	{
+      		__msg__->code = 0x02;
+       	}
+        else if(status == -3217)
+        {
+                 __msg__->code = 0x12;
+        }
+        else if(status == 40)
+        {
+               __msg__->code = 0x32;
+        }
 
 
 }
