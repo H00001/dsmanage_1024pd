@@ -24,3 +24,25 @@ void clearMessage(msg * obj)
 {
     memset(&(obj->message),0,MESSAGELEN);
 }
+int writeAlive(msg *obj,int cliid)
+{
+        inint(obj);
+        obj->clientid = cliid;
+        obj->messageid[0] = 0;
+        obj->messageid[0] = 0;
+        obj->code = 0x00;
+
+        
+        return 0;
+}
+int writeDetch(msg *obj,int cliid)
+{
+        inint(obj);
+        obj->clientid = cliid;
+        obj->messageid[0] = 0;
+        obj->messageid[0] = 0;
+        obj->code = 0x90;
+
+        return 0;
+}  
+

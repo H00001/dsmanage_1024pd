@@ -1,6 +1,8 @@
 #include "stdafx.h"
 int port=6789;
 int main(int argc, char** argv) {
+	twc tc;
+	readconfig("wd1024.conf",&tc);
         int sin_len;
 	int cli_pro_id;
         unsigned char buffer[MESSAGEIDLEN+OPTIONLEN+MESSAGELEN+3];
@@ -14,6 +16,10 @@ int main(int argc, char** argv) {
 	        exit(-1);
         }
         printf("Waiting for data form server \n");
+	msg inmsg;
+        writeAlive(&inmsg,0);
+        isend("127.0.0.1",1024,&inmsg);
+
         while(1)
         {
                 recvfrom(socket_descriptor,&buffer,sizeof(buffer),0,(struct sockaddr *)&sin,&sin_len);
@@ -25,7 +31,7 @@ int main(int argc, char** argv) {
 		{
 			printf("\nprocess:%d deal the message\n",cli_pro_id);
 		}
-    }
+    	}
     close(socket_descriptor);
     exit(0);
 
@@ -42,9 +48,7 @@ void signalHandel(int signo) {
 	else if(signo==2)
 	{
 		msg exitmsg;
-		exitmsg.messageid[0] = 0;
-		exitmsg.messageid[1] = 0;
-		exitmsg.code = 0x09;
+                writeDetch(&exitmsg,0);
 		isend("127.0.0.1",1024,&exitmsg);
 		exit(1);
 	}
@@ -71,6 +75,7 @@ void writeValWithStatus(msg* __msg__, int status)
 int message_deal_Hander(unsigned char * buffer)
 {
 	msg message;
+        inint(&message);
         unsigned char resultbuffer[MESSAGELEN];
 	changeTomsg(buffer,&message);
         if(strlen(message.message) == 1&& message.message[0]=='\n')

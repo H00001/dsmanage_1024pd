@@ -3,6 +3,9 @@
 #else
 #define __not_auto_config
 #endif
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
 typedef enum outputflag
 {
         NOOUTPUT = 0
@@ -12,6 +15,7 @@ typedef enum outputflag
 typedef struct  twd1024_config
 {
         unsigned int _output_flag;
+	int port;
         unsigned char client_id;
 
 }twc;

@@ -5,6 +5,7 @@
 #include "utils/oncesend.h"
 #include "utils/runcmd.h"
 #include "utils/udpsocket.h"
+#include "utils/readconfig.h"
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>

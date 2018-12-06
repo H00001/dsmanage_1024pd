@@ -37,18 +37,23 @@ void waittingforreceive()
                 printf("\tmessageid:%d%d\n",message.messageid[0],message.messageid[1]);
                 if(message.messageid[0]==0&&message.messageid[1]==0)
                 {
-                        if(message.code&0x08==0x08)
+                        if((message.code&0x80)==0x80)//precedence of operator is important
                         {
                                 printf("\ttype:client has been shutdown\n");
                         }
-                        else if(message.code&0x08==0x00)
+                        else if((message.code&0x80)==0x00)
                         {
                                 printf("\ttype:client is alive\n");
                         }
+                        else
+                        {
+                        }
+
 
                 }
                 else
                 {
+                        printf("\naline\n");
                         if((message.code&0x01)==0x00&&(message.code&0x10)==0x00)
                         {
                                 printf("\ttype:resopnse shell\n");
