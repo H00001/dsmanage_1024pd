@@ -14,7 +14,7 @@ typedef struct __message__
         byte messageid[MESSAGEIDLEN];
         byte code;
         byte option[OPTIONLEN];
-        char message[MESSAGELEN];
+        byte message[MESSAGELEN];
 
 }msg;
 

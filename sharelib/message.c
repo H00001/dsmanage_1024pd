@@ -31,8 +31,8 @@ void __inline_long_put_bytes(msg *obj,long val)
          int long_len = sizeof(long) - 1;
          for(int i=long_len;i>=0;i--)
          {
-                movecode = movecode << ((long_len-i)*8);
                 obj->message[i] = (val&movecode)>>((long_len-i)*8);
+                movecode = movecode << 8;
          }
 
 }

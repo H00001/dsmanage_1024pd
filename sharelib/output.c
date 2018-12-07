@@ -19,3 +19,21 @@ void print_sw(int isput,puttype __sw,char * __message)
     else{
     }
 }
+
+void print_error(int errorcode)
+{
+        char * errors = NULL;
+        if(errorcode<2000)
+        {
+        }
+        else{
+                switch(errorcode)
+                {
+                        case __PORT_HAS_BEEN_USE__:
+                        errors = __PORT_HAS_BEEN_USE_S;
+                        break;
+
+                }
+        }
+        print_sw(1,PUTERR,errors);
+}

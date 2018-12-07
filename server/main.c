@@ -1,19 +1,26 @@
 #include "stdafx.h"
+#define PDTLEN 8
 int sendConIno_(char *__ip,int __port, int type);
 int port=6789;
+int pdt[8];
 int main(int argc, char** argv) {
 	twc tc;
 	readconfig("wd1024.conf",&tc); //read comfig file and setting the envoiment
+        memset(&pdt,0,40);
         int sin_len;
 	int cli_pro_id;
         unsigned char buffer[MESSAGEIDLEN+OPTIONLEN+MESSAGELEN+3];
-	signal(SIGCHLD,&signalHandel);  //reigster the function that deal with defunct process
+        signal(SIGCHLD,&signalHandel);  //reigster the function that deal with defunct process
 	signal(SIGINT,&signalHandel);  //reigster the function that deal with defunct process
         int socket_descriptor;
         struct sockaddr_in sin;
         sin_len = inint__cd23(&socket_descriptor,&sin,port);
         if(sin_len <0)
         {
+                if(sin_len==-2)
+                {
+                        print_error(__PORT_HAS_BEEN_USE__);
+                }
 	        exit(-1);
         }
         printf("Waiting for data form server \n");
@@ -28,6 +35,18 @@ int main(int argc, char** argv) {
 		}
 		else
 		{
+                        int widz = 0;
+                        for(;widz<PDTLEN;widz++){
+                                if(pdt[widz]==0)
+                                {
+                                        pdt[widz] = cli_pro_id;
+                                        break;
+                                }
+                        }
+                        if(widz == PDTLEN)
+                        {
+                        }
+
 			printf("\nprocess:%d deal the message\n",cli_pro_id);
 		}
     	}
@@ -39,13 +58,23 @@ int main(int argc, char** argv) {
 void signalHandel(int signo) {
 	//the main use is deal with the defunct process
 	if(signo==SIGCHLD){
-     		pid_t pid;
-    		int stat;
-    		pid = wait(&stat);    
+                //if(msgs==5)
+                //{/
+                          int childStatus;
+                          for(int i = 0;i<10;i++){
+                                  if(pdt[i]!=0)
+                                  {
+                                        if( waitpid(pdt[i], &childStatus, WNOHANG)==pdt[i])
+                                          {
+                                                  printf("process:%d has been collection\n",pdt[i]);
+                                                  pdt[i]=0;
+                                          }
+                                  }
+                        }
 	}
 	else if(signo==2)
 	{
-                sendConIno_("",0,0);
+                sendConIno_("",0,1);
 		exit(1);
 	}
     	return;

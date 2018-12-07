@@ -40,9 +40,15 @@ int main(int argc, char** argv) {
     address.sin_port=htons(port);
     socket_descriptor=socket(AF_INET,SOCK_DGRAM,0);
     while(1){
-                fgets (message.message, 999, stdin);
-                sendto(socket_descriptor,&message,sizeof(message),0,(struct sockaddr *)&address,sizeof(address));
-        }
+                fgets (message.message, MESSAGELEN-1, stdin);
+                if(strlen(message.message)==1&&message.message[0]=='\n')
+                {
+                }
+                else
+                {
+                        sendto(socket_descriptor,&message,sizeof(message),0,(struct sockaddr *)&address,sizeof(address));
+                }
+    }
         close(socket_descriptor);
         printf("Messages Sent,terminating\n");
         wait(&cpid);

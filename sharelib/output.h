@@ -5,7 +5,7 @@
 #include<sys/stat.h>
 #include<fcntl.h>
 #include <unistd.h>
-
+#include "myerror.h"
 typedef enum puttypes
 {
         NOPUT=0,PUTERR,PUTSTD
@@ -13,3 +13,4 @@ typedef enum puttypes
 }puttype;
 void print_sw(int isput,puttype __sw,char * __message);
 
+void print_error(int errorcode);

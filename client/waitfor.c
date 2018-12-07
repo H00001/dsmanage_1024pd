@@ -48,13 +48,20 @@ void waittingforreceive()
                         else
                         {
                         }
-                        
-                        printf("\tresponse:%u%u%u\n",message.message[7],message.message[6],message.message[5]);
-
+                        printf("\ttime:"); 
+                        for(int i =0;i<8;i++)
+                        {
+                                if(message. message[i]<0xf)
+                                {
+                                        printf("0");
+                                }
+                                printf("%x",message.message[i]);
+                        }
+                        printf("\n");
                 }
                 else
                 {
-                        printf("\naline\n");
+                        printf("\naline:message.  %d\n",message.code);
                         if((message.code&0x01)==0x00&&(message.code&0x10)==0x00)
                         {
                                 printf("\ttype:resopnse shell\n");

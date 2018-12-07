@@ -18,6 +18,7 @@ int  cmd_system__0a40(const char* command,unsigned char *__result__,int bufferle
         }
         if(pclose(fpRead)!=0)
         {
+                printf("\nclose error\n::%d",errno);
                 return -3217;
         }
         return 0;
