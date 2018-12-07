@@ -1,20 +1,30 @@
 #include "stdafx.h"
-#define PDTLEN 8
-int sendConIno_(char *__ip,int __port, int type);
-int port=6789;
-int pdt[8];
-int main(int argc, char** argv) {
-	twc tc;
-	readconfig("wd1024.conf",&tc); //read comfig file and setting the envoiment
-        memset(&pdt,0,40);
+static twc tc;
+int pdt[PDTLEN]; //children process discription table
+
+int __main__init()
+{
+        memset(&tc,0,sizeof(tc));
+        memset(&pdt,0,sizeof(int)*PDTLEN); //inint pdt
+        signal(SIGCHLD,&signalHandel);  //reigster the function that deal with defunct process
+	signal(SIGINT,&signalHandel);  //reigster the function that deal with ctrl_c request
+        return  readconfig("wd1024.conf",&tc);
+}
+
+
+int main() {
+        int erro = __main__init();
         int sin_len;
 	int cli_pro_id;
-        unsigned char buffer[MESSAGEIDLEN+OPTIONLEN+MESSAGELEN+3];
-        signal(SIGCHLD,&signalHandel);  //reigster the function that deal with defunct process
-	signal(SIGINT,&signalHandel);  //reigster the function that deal with defunct process
         int socket_descriptor;
         struct sockaddr_in sin;
-        sin_len = inint__cd23(&socket_descriptor,&sin,port);
+        if(erro!=0)
+        {
+                print_error(erro);
+                exit(-1);
+        }
+        unsigned char buffer[MESSAGEIDLEN+OPTIONLEN+MESSAGELEN+3];
+        sin_len = inint__cd23(&socket_descriptor,&sin,tc.lport);
         if(sin_len <0)
         {
                 if(sin_len==-2)
@@ -25,7 +35,7 @@ int main(int argc, char** argv) {
         }
         printf("Waiting for data form server \n");
         
-        sendConIno_("",0,0);
+        sendConIno_(tc.server_v4[0],tc.sport,0,tc.client_id);
         while(1)
         {
                 recvfrom(socket_descriptor,&buffer,sizeof(buffer),0,(struct sockaddr *)&sin,&sin_len);
@@ -45,6 +55,7 @@ int main(int argc, char** argv) {
                         }
                         if(widz == PDTLEN)
                         {
+                                kill(cli_pro_id,SIGKILL);
                         }
 
 			printf("\nprocess:%d deal the message\n",cli_pro_id);
@@ -64,7 +75,7 @@ void signalHandel(int signo) {
                           for(int i = 0;i<10;i++){
                                   if(pdt[i]!=0)
                                   {
-                                        if( waitpid(pdt[i], &childStatus, WNOHANG)==pdt[i])
+                                        if(waitpid(pdt[i], &childStatus, WNOHANG)==pdt[i])
                                           {
                                                   printf("process:%d has been collection\n",pdt[i]);
                                                   pdt[i]=0;
@@ -74,57 +85,10 @@ void signalHandel(int signo) {
 	}
 	else if(signo==2)
 	{
-                sendConIno_("",0,1);
+                sendConIno_(tc.server_v4[0],tc.sport,1,tc.client_id);
 		exit(1);
 	}
     	return;
-
-}
-int sendConIno_(char *__ip,int __port, int type)
-{
-        msg *inmsg = (msg *)malloc(sizeof(msg));
-        if(inmsg==NULL)
-        {
-                return 2000;
-        }
-        switch(type)
-        {
-                case 0:
-                {
-                        writeAlive(inmsg,0);
-                        break;
-                }
-                case 1:
-                {
-
-                        writeDetch(inmsg,0);
-                        break;
-                }
-
-        }
-        int sendval = isend("127.0.0.1",1024,inmsg);
-        if(sendval!=0)
-        {
-               return sendval; 
-        }
-        free(inmsg);
-        return 0;
-}
-void writeValWithStatus(msg* __msg__, int status)
-{
-       	if(status==0)
-       	{
-      		__msg__->code = 0x02;
-       	}
-        else if(status == -3217)
-        {
-                 __msg__->code = 0x12;
-        }
-        else if(status == 40)
-        {
-               __msg__->code = 0x32;
-        }
-
 
 }
 int message_deal_Hander(unsigned char * buffer)
@@ -154,7 +118,7 @@ int message_deal_Hander(unsigned char * buffer)
 		{
 
       		}
-		if(isend("127.0.0.1",1024,&message)!=0)
+		if(isend(tc.server_v4[0],tc.sport,&message)!=0)
 		{
 			print_sw(DEBUG,PUTERR,"\nerror\n");
 		}

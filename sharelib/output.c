@@ -25,6 +25,7 @@ void print_error(int errorcode)
         char * errors = NULL;
         if(errorcode<2000)
         {
+                errors = strerror(errorcode);
         }
         else{
                 switch(errorcode)
