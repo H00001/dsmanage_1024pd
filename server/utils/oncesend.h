@@ -13,4 +13,4 @@
 
 #include "../../sharelib/output.h"
 
-int isend(char * ip,int port,msg *message );
+int isend(unsigned const char * ip,int port,msg *message );

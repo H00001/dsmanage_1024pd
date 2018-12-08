@@ -16,7 +16,7 @@ void writeValWithStatus(msg* __msg__, int status)
 
 }
 
-int sendConIno_(char *__ip,int __port, int type,int client_id_12bf)
+int sendConIno_(unsigned char *__ip,int __port, int type,int client_id_12bf)
 {
         msg *inmsg = (msg *)malloc(sizeof(msg));
         if(inmsg==NULL)

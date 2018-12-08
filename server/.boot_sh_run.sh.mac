@@ -1,0 +1,22 @@
+#!/bin/bash
+export CLICOLOR=1
+export LSCOLORS=gxfxaxdxcxegedabagacad
+alias untar='tar -zxvf '
+alias wget='wget -c '
+alias getpass="openssl rand -base64 20"
+alias sha='shasum -a 256 '
+alias rm='rm -i'
+alias ping='ping -c 5'
+alias www='python -m SimpleHTTPServer 8000'
+alias speed='speedtest-cli --server 2406 --simple'
+alias ipe='curl ipinfo.io/ip'
+alias ls='ls'
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias bc='bc -l'
+alias sha1='openssl sha1'
+alias mount='mount |column -t'
+alias mkdir='mkdir -pv'
+alias c='clear'
+export PULLTIME="download from 192.123.34.3 at time `date +%Y-%m-%d,%H:%m:%s`"

@@ -1,5 +1,5 @@
 #include "change.h"
-int changeTomsg(char * buffer,msg * obj){
+int changeTomsg(unsigned char * buffer,msg * obj){
 	obj->clientid = buffer[0];
         obj->messageid[0] = buffer[1];
         obj->messageid[1] = buffer[2];

@@ -12,32 +12,32 @@ int readconfig(char * path, twc* config)
 	}
         char *p = NULL;
         int serverl = 0;
-    	while (fgets(buffer, BUFFERREDLEN, fp) != NULL) {
-                trim(buffer);
+    	while (fgets((char *)buffer, BUFFERREDLEN, fp) != NULL) {
+                trim((char *)buffer);
 		if((buffer[0]=='#')||(buffer[0]==';'))
 		{
 		}
 		else
 		{
                         
-			if(strstr(buffer,LPORT)!=NULL)
+			if(strstr((const char *)buffer,LPORT)!=NULL)
 			{
-			        strncpy(param,buffer+strlen(LPORT),strlen(buffer)-strlen(LPORT));	
-                                config->lport = atoi(param);
+			        strncpy((char *)param,(const char *)buffer+strlen(LPORT),strlen((const char *)buffer)-strlen(LPORT));	
+                                config->lport = atoi((const char *)param);
 			}
-			else if(strstr(buffer,SPORT)!=NULL)
+			else if(strstr((const char *)buffer,SPORT)!=NULL)
 			{
-			        strncpy(param,buffer+strlen(SPORT),strlen(buffer)-strlen(SPORT));	
-                                config->sport = atoi(param);
+			        strncpy((char *)param,(const char *)buffer+strlen(SPORT),strlen((const char *)buffer)-strlen(SPORT));	
+                                config->sport = atoi((const char *)param);
                         }
-			else if(strstr(buffer,CLIID)!=NULL)
+			else if(strstr((const char *)buffer,CLIID)!=NULL)
 			{
-			        strncpy(param,buffer+strlen(CLIID),strlen(buffer)-strlen(CLIID));	
-                                config->client_id = atoi(param);
+			        strncpy((char *)param,(const char *)buffer+strlen(CLIID),strlen((const char *)buffer)-strlen(CLIID));	
+                                config->client_id = (unsigned int)atoi((const char *)param);
                         }
-			else if(strstr(buffer,SERVER)!=NULL)
+			else if(strstr((const char *)buffer,SERVER)!=NULL)
 			{
-			        strncpy(param,buffer+strlen(SERVER),strlen(buffer)-strlen(SERVER));	
+			        strncpy((char *)param,(const char *)buffer+strlen(SERVER),strlen((const char *)buffer)-strlen(SERVER));	
                                 memcpy(config->server_v4[serverl],param,16);
                                 //there have a buffer ,config->server_v4 could out of bound
                                 serverl ++;

@@ -61,7 +61,6 @@ void waittingforreceive()
                 }
                 else
                 {
-                        printf("\naline:message.  %d\n",message.code);
                         if((message.code&0x01)==0x00&&(message.code&0x10)==0x00)
                         {
                                 printf("\ttype:resopnse shell\n");

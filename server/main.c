@@ -14,7 +14,7 @@ int __main__init()
 
 int main() {
         int erro = __main__init();
-        int sin_len;
+        unsigned int sin_len;
 	int cli_pro_id;
         int socket_descriptor;
         struct sockaddr_in sin;
@@ -97,7 +97,7 @@ int message_deal_Hander(unsigned char * buffer)
         inint(&message);
         unsigned char resultbuffer[MESSAGELEN];
 	changeTomsg(buffer,&message);
-        if(strlen(message.message) == 1&& message.message[0]=='\n')
+        if(strlen((const char *)message.message) == 1&& message.message[0]=='\n')
         {
                  return 0;
         }

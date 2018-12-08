@@ -18,7 +18,7 @@ typedef struct __message__
 
 }msg;
 
-int writeMessage(msg * obj,char * _message_3c21);
+int writeMessage(msg * obj,unsigned const char * _message_3c21);
 void clearMessage(msg * obj);
 void inint(msg* obj);
 int writeAlive(msg *obj,int cliid);

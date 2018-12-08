@@ -4,10 +4,10 @@ void inint(msg * obj)
 	memset(obj,0,sizeof(msg));
 
 }
-int writeMessage(msg * obj,char * _message_3c21)
+int writeMessage(msg * obj,unsigned const char * _message_3c21)
 {
         clearMessage(obj);
-        if(strlen(_message_3c21) > MESSAGELEN -1)
+        if(strlen((const char *)_message_3c21) > MESSAGELEN -1)
         {
                 obj->code = 48;
                 return -1;

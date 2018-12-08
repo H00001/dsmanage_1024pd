@@ -1,8 +1,8 @@
 #include "runcmd.h"
-int  cmd_system__0a40(const char* command,unsigned char *__result__,int bufferlen)
+int  cmd_system__0a40(unsigned const char* command,unsigned char *__result__,int bufferlen)
 {
         int flag = 0;
-        FILE *fpRead =  popen(command, "r");
+        FILE *fpRead =  popen((const char *)command, "r");
         if(!fpRead)
         {
 	       return errno;
