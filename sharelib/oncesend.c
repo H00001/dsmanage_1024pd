@@ -1,7 +1,6 @@
 #include "oncesend.h"
 int isend(unsigned const char * ip,int port,msg *message )
 {
-        print_sw(DEBUG,PUTSTD,"\nSENDED##DEBUG\n");
         int socket_descriptor;
         struct sockaddr_in address;
         bzero(&address,sizeof(address));

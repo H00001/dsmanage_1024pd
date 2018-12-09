@@ -1,4 +1,4 @@
-#include "waitfor.h"
+#include "stdafx.h"
 
 int inint__cd23(int *socket_descriptor, struct sockaddr_in *sin)
 {
@@ -59,8 +59,8 @@ void waittingforreceive()
                 }
                 else
                 {
-                printf("\tclientid:%d\n",message.clientid);
-               // printf("\tmessageid:%d%d\n",message.messageid[0],message.messageid[1]);
+                        printf("\tclientid:%d\n",message.clientid);
+                        // printf("\tmessageid:%d%d\n",message.messageid[0],message.messageid[1]);
                         if((message.code&0x01)==0x00&&(message.code&0x10)==0x00)
                         {
                                 printf("\t\033[32;49;1m●\033[39;49;0m type:resopnse shell\n");

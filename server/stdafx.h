@@ -2,8 +2,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <stdlib.h>
-#include "utils/oncesend.h"
 #include "utils/runcmd.h"
+#include "../sharelib/oncesend.h"
 #include "utils/udpsocket.h"
 #include "utils/readconfig.h"
 #include <unistd.h>

@@ -1,3 +1,3 @@
 output:
-	gcc main.c waitfor.c -static-libgfortran ../sharelib/*.a
+	gcc main.c stdafx.h waitfor.c -static-libgfortran ../sharelib/*.a
 	rm *.o *.h.gch

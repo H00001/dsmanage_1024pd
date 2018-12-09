@@ -24,3 +24,4 @@ void inint(msg* obj);
 int writeAlive(msg *obj,int cliid);
 int writeDetch(msg *obj,int cliid);
 void __inline_long_put_bytes(msg *obj,long val);
+int changeTomsg(unsigned char * buffer,msg * obj);
