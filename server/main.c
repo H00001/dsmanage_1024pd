@@ -69,19 +69,17 @@ int main() {
 void signalHandel(int signo) {
 	//the main use is deal with the defunct process
 	if(signo==SIGCHLD){
-                //if(msgs==5)
-                //{/
-                          int childStatus;
-                          for(int i = 0;i<10;i++){
-                                  if(pdt[i]!=0)
-                                  {
-                                        if(waitpid(pdt[i], &childStatus, WNOHANG)==pdt[i])
-                                          {
-                                                  printf("process:%d has been collection\n",pdt[i]);
-                                                  pdt[i]=0;
-                                          }
-                                  }
+                int childStatus;
+                for(int i = 0;i<10;i++){
+                       if(pdt[i]!=0)
+                       {
+                                if(waitpid(pdt[i], &childStatus, WNOHANG)==pdt[i])
+                                {
+                                         printf("process:%d has been collection\n",pdt[i]);
+                                         pdt[i]=0;
+                                }
                         }
+                }
 	}
 	else if(signo==2)
 	{

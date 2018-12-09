@@ -8,6 +8,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include "../sharelib/output.h"
 #include "../sharelib/oncesend.h"
 void waittingforreceive();
 

@@ -1,11 +1,12 @@
 #include "stdafx.h"
+#define IPPORT_V4 6789
 int port=6789;
 
 
 char ip[2][16]={"127.0.0.1","127.0.0.1"};
 char id[2] = {121,121};
-int main(int argc, char** argv) {
-
+int main(int argc, char** argv) 
+{
 	int cpid = 0;
 	if((cpid=fork())==0)
 	{
@@ -13,32 +14,32 @@ int main(int argc, char** argv) {
 	}
 	else
 	{	
-                int socket_descriptor; 
-                int iter=0;
-                 time_t t;
-
-                 msg message;
+                time_t t;
+                msg message;
                 inint(&message);
-                message.clientid = 121;
-                message.messageid[0] = time(0)%254;
                 message.code = 3;
-                message.messageid[1] = (time(0)/100) %254;
-                struct sockaddr_in address;
-                bzero(&address,sizeof(address));
                 while(1){
-                        fgets (message.message, MESSAGELEN-1, stdin);
-                        if(strlen(message.message)==1&&message.message[0]=='\n')
-                        {
+                                fgets (message.message, MESSAGELEN-1, stdin);
+                                if(strlen(message.message)==1&&message.message[0]=='\n')
+                                {
+                                }
+                                else
+                                {
+                                        for(int i = 0 ;i< 2;i++)
+                                        {
+                                                message.clientid = id[i];
+                                                message.messageid[0] = time(0)%254;
+                                                message.messageid[1] = (time(0)/100) %254;
+                                                if(__CAN_NOT_CLOSE__ == isend(ip[i],IPPORT_V4,&message))
+                                                {
+                                                        continue;
+                                                        print_error(__CAN_NOT_CLOSE__);
+                                                }
+                                        }
+                                }
                         }
-                        else
-                        {
-                                isend("127.0.0.1",6789,&message);
-                        }
+                wait(&cpid);
+                exit(0);
         }
-        close(socket_descriptor);
-        printf("Messages Sent,terminating\n");
-        wait(&cpid);
-        exit(0);
-    }
         return (EXIT_SUCCESS);
 }

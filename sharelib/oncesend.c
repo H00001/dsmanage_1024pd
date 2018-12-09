@@ -22,5 +22,14 @@ int isend(unsigned const char * ip,int port,msg *message )
                 {
                         return 0;
                 }
-       }
+       
+        }
+        if(close(socket_descriptor)==0)
+        {
+                return 0;
+        }
+        else
+        { 
+         return 214;
+        }
 }
