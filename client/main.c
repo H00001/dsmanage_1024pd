@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
 
     msg message;
     inint(&message);
-    message.clientid = 1;
+    message.clientid = 121;
     message.messageid[0] = time(0)%254;
     message.code = 3;
     message.messageid[1] = (time(0)/100) %254;

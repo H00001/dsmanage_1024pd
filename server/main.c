@@ -97,9 +97,13 @@ int message_deal_Hander(unsigned char * buffer)
         inint(&message);
         unsigned char resultbuffer[MESSAGELEN];
 	changeTomsg(buffer,&message);
-        if(strlen((const char *)message.message) == 1&& message.message[0]=='\n')
+        if(message.clientid!=tc.client_id)
         {
-                 return 0;
+                return 0;
+        }
+        else if(strlen((const char *)message.message) == 1&& message.message[0]=='\n')
+        {
+                return 0;
         }
         printf("[\n\tmessageid:%d%d\n",message.messageid[0],message.messageid[1]);
         printf("\trequest from server:%s",message.message);

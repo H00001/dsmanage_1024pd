@@ -33,17 +33,15 @@ void waittingforreceive()
         {
                 recvfrom(socket_descriptor,&buffer,sizeof(buffer),0,(struct sockaddr *)&sin,&sin_len);
                 changeTomsg(buffer,&message);
-                printf("\tclientid:%d\n",message.clientid);
-                printf("\tmessageid:%d%d\n",message.messageid[0],message.messageid[1]);
                 if(message.messageid[0]==0&&message.messageid[1]==0)
                 {
                         if((message.code&0x80)==0x80)//precedence of operator is important
                         {
-                                printf("\ttype:client has been shutdown\n");
+                                printf("\t\033[31;49;1m●\033[39;49;0m client %d has been shutdown\n",message.clientid);
                         }
                         else if((message.code&0x80)==0x00)
                         {
-                                printf("\ttype:client is alive\n");
+                                printf("\t\033[32;49;1m●\033[39;49;0m client %d is alive\n",message.clientid);
                         }
                         else
                         {
@@ -61,9 +59,11 @@ void waittingforreceive()
                 }
                 else
                 {
+                printf("\tclientid:%d\n",message.clientid);
+               // printf("\tmessageid:%d%d\n",message.messageid[0],message.messageid[1]);
                         if((message.code&0x01)==0x00&&(message.code&0x10)==0x00)
                         {
-                                printf("\ttype:resopnse shell\n");
+                                printf("\t\033[32;49;1m●\033[39;49;0m type:resopnse shell\n");
                         }
                         if(message.code==0x02)
                         {
@@ -76,7 +76,7 @@ void waittingforreceive()
                         {
                                 printf("\ttype:message too long\n");
                         }
-                        printf("\tresponse:%s",message.message);
+                        printf("\tresponse:%s\n",message.message);
                 }
     }
 
