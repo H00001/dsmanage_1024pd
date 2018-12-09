@@ -37,16 +37,16 @@ void waittingforreceive()
                 {
                         if((message.code&0x80)==0x80)//precedence of operator is important
                         {
-                                printf("\t\033[31;49;1m●\033[39;49;0m client %d has been shutdown\n",message.clientid);
+                                printf("\033[31;49;1m●\033[39;49;0m client %d has been shutdown\n",message.clientid);
                         }
                         else if((message.code&0x80)==0x00)
                         {
-                                printf("\t\033[32;49;1m●\033[39;49;0m client %d is alive\n",message.clientid);
+                                printf("\033[32;49;1m●\033[39;49;0m client %d is alive\n",message.clientid);
                         }
                         else
                         {
                         }
-                        printf("\ttime:"); 
+                        printf("time:"); 
                         for(int i =0;i<8;i++)
                         {
                                 if(message. message[i]<0xf)
@@ -59,24 +59,22 @@ void waittingforreceive()
                 }
                 else
                 {
-                        printf("\tclientid:%d\n",message.clientid);
-                        // printf("\tmessageid:%d%d\n",message.messageid[0],message.messageid[1]);
                         if((message.code&0x01)==0x00&&(message.code&0x10)==0x00)
                         {
-                                printf("\t\033[32;49;1m●\033[39;49;0m type:resopnse shell\n");
+                                printf("\033[32;49;1m●\033[39;49;0m client:%d type:shell\n",message.clientid);
                         }
-                        if(message.code==0x02)
+                        else if(message.code==0x02)
                         {
                         }
-                        if(message.code==0x12)
+                        else if(message.code==0x12)
                         {
-                                printf("\ttype:error cmd error\n");
+                                printf("\033[31;49;1m●\033[39;49;0m client:%d type:cmd error\n",message.clientid);
                         }
-                        if(message.code==0x32)
+                        else if(message.code==0x32)
                         {
-                                printf("\ttype:message too long\n");
+                                printf("\033[33;49;1m●\033[39;49;0m client:%d type:too long\n",message.clientid);
                         }
-                        printf("\tresponse:%s\n",message.message);
+                        printf("%s\n",message.message);
                 }
     }
 

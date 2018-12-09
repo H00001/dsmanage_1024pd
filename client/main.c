@@ -28,8 +28,9 @@ int main(int argc, char** argv)
                                         for(int i = 0 ;i< 2;i++)
                                         {
                                                 message.clientid = id[i];
+                                                srand((unsigned)time(NULL));
                                                 message.messageid[0] = time(0)%254;
-                                                message.messageid[1] = (time(0)/100) %254;
+                                                message.messageid[1] = rand()%255; 
                                                 if(__CAN_NOT_CLOSE__ == isend(ip[i],IPPORT_V4,&message))
                                                 {
                                                         continue;

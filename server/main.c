@@ -7,6 +7,7 @@ int __main__init()
         memset(&tc,0,sizeof(tc));
         memset(&pdt,0,sizeof(int)*PDTLEN); //inint pdt
         signal(SIGCHLD,&signalHandel);  //reigster the function that deal with defunct process
+        signal(SIGHUP,&signalHandel);  //reigster the function that deal with defunct process
 	signal(SIGINT,&signalHandel);  //reigster the function that deal with ctrl_c request
         return  readconfig("wd1024.conf",&tc);
 }
@@ -81,11 +82,14 @@ void signalHandel(int signo) {
                         }
                 }
 	}
-	else if(signo==2)
+	else if(signo==SIGINT)
 	{
                 sendConIno_(tc.server_v4[0],tc.sport,1,tc.client_id);
 		exit(1);
 	}
+	else if(signo==SIGHUP)
+	{
+        }
     	return;
 
 }
