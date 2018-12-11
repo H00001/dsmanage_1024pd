@@ -37,16 +37,16 @@ void waittingforreceive()
                 {
                         if((message.code&0x80)==0x80)//precedence of operator is important
                         {
-                                printf("\033[31;49;1m●\033[39;49;0m client %d has been shutdown\n",message.clientid);
+                                printf("\033[31;49;1m●\033[39;49;0m client %d has been shutdown",message.clientid);
                         }
                         else if((message.code&0x80)==0x00)
                         {
-                                printf("\033[32;49;1m●\033[39;49;0m client %d is alive\n",message.clientid);
+                                printf("\033[32;49;1m●\033[39;49;0m client %d is alive",message.clientid);
                         }
                         else
                         {
                         }
-                        printf("time:"); 
+                        printf(" at time:"); 
                         for(int i =0;i<8;i++)
                         {
                                 if(message. message[i]<0xf)

@@ -37,4 +37,5 @@ void print_error(int errorcode)
                 }
         }
         print_sw(1,PUTERR,errors);
+        print_sw(1,PUTERR,"\n");
 }

@@ -3,7 +3,7 @@
 int port=6789;
 
 
-char ip[2][16]={"127.0.0.1","127.0.0.1"};
+char ip[2][16]={"127.0.0.1","127.0.0.8"};
 char id[2] = {121,121};
 int main(int argc, char** argv) 
 {

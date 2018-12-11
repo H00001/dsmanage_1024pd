@@ -43,7 +43,6 @@ int readconfig(char * path, twc* config)
                                 serverl ++;
                         }
                         else{
-                                printf("not east\n");
                         }
 		}
                 

@@ -1,4 +1,5 @@
 #include "udpsocket.h"
+#include<stdio.h>
 int inint__cd23(int *socket_descriptor, struct sockaddr_in *sin ,int port )
 {
     int sin_len;
@@ -8,15 +9,20 @@ int inint__cd23(int *socket_descriptor, struct sockaddr_in *sin ,int port )
     sin->sin_port=htons(port);
     sin_len=sizeof(*sin);
     *socket_descriptor=socket(AF_INET,SOCK_DGRAM,0);
-    if(*socket_descriptor<0)
+    if((*socket_descriptor)<0)
     {
             return -1;
     }
    if(bind(*socket_descriptor,(const struct sockaddr *)sin,sizeof(*sin)))
-   {
-            return -2;
-   }
-    return sin_len;
+        {
+                //fail;
+                return -2;
+        }
+        else
+        {
+
+        }
+        return sin_len;
 
 }
 

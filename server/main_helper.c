@@ -14,6 +14,10 @@ void writeValWithStatus(msg* __msg__, int status)
                __msg__->code = 0x32;
         }
 
+        else if(status == -1)
+        {
+                printf("ddddd###--%d",errno);
+        }
 }
 
 int sendConIno_(unsigned char *__ip,int __port, int type,int client_id_12bf)
