@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "myerror.h"
+#define FILEBUFFER 1024
 typedef enum puttypes
 {
         NOPUT=0,PUTERR,PUTSTD
@@ -16,3 +17,5 @@ typedef enum puttypes
 void print_sw(int isput,puttype __sw,char * __message);
 
 void print_error(int errorcode);
+
+void print_first();

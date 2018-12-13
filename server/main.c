@@ -77,8 +77,8 @@ int main() {
                         }
 
                         sigmsg recvdate;
-                        if( msgrcv(msgid, (void  *)&recvdate, MBUFSIZ, STD_MSG, IPC_NOWAIT) == -1) {
-	                        print_error(errno);
+                        if(msgrcv(msgid, (void  *)&recvdate, MBUFSIZ, STD_MSG, IPC_NOWAIT) == -1) {
+	                   //     print_error(errno);
                         }
 
                         else{
@@ -121,8 +121,8 @@ void signalHandel(int signo) {
 int message_deal_Hander(unsigned char * buffer,char *pathm)
 {
 	msg message;
-        inint(&message);
         unsigned char resultbuffer[MESSAGELEN];
+        inint(&message);
 	changeTomsg(buffer,&message);
         if(message.clientid!=tc.client_id)
         {
@@ -132,7 +132,7 @@ int message_deal_Hander(unsigned char * buffer,char *pathm)
         {
                 return 0;
         }
-        printf("message:%d%d from %d msg:%s",message.messageid[0],message.messageid[1],message.clientid,message.message);
+        printf("message:%d%d from %d msg:%s ",message.messageid[0],message.messageid[1],message.clientid,message.message);
         if((message.code&0x01)==1)
         {
         	if((message.code&0x02)==2)
@@ -140,10 +140,6 @@ int message_deal_Hander(unsigned char * buffer,char *pathm)
                         if(((*(message.message))=='c')&&((*((message.message+1)))=='d'))
                         {
                                 sigmsg send_msg;
-                                int popc = 3;
-                                while(*(message.message+popc)!='\n')
-                                       popc ++;
-                                *(message.message+popc) = 0;
                                 strcpy(send_msg.text,message.message+3);
                                 send_msg.msgtype = STD_MSG;
                                 if(msgsnd(msgid, (sigmsg  *)(&send_msg), MBUFSIZ, 0) == -1) {

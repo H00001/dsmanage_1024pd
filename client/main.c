@@ -7,6 +7,7 @@ char ip[2][16]={"127.0.0.1","127.0.0.8"};
 char id[2] = {121,121};
 int main(int argc, char** argv) 
 {
+        print_first();
 	int cpid = 0;
 	if((cpid=fork())==0)
 	{
@@ -20,7 +21,8 @@ int main(int argc, char** argv)
                 message.code = 3;
                 while(1){
                                 fgets (message.message, MESSAGELEN-1, stdin);
-                                if(strlen(message.message)==1&&message.message[0]=='\n')
+                                message.message[strlen(message.message)-1] = 0;
+                                if(strlen(message.message)==0||message.message[0]=='\n')
                                 {
                                 }
                                 else
@@ -33,8 +35,8 @@ int main(int argc, char** argv)
                                                 message.messageid[1] = rand()%255; 
                                                 if(__CAN_NOT_CLOSE__ == isend(ip[i],IPPORT_V4,&message))
                                                 {
-                                                        continue;
                                                         print_error(__CAN_NOT_CLOSE__);
+                                                        continue;
                                                 }
                                         }
                                 }
