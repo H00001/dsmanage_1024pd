@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #define IPPORT_V4 6789
+#define CLILEN_V4 3
 int port=6789;
 
 
-char ip[2][16]={"127.0.0.1","127.0.0.8"};
-char id[2] = {121,121};
+char ip[CLILEN_V4][16]={"127.0.0.1","",""};
+char id[CLILEN_V4] = {121,121,123};
 int main(int argc, char** argv) 
 {
         print_first();
@@ -27,16 +28,22 @@ int main(int argc, char** argv)
                                 }
                                 else
                                 {
-                                        for(int i = 0 ;i< 2;i++)
+                                        for(int i = 0 ;i< CLILEN_V4;i++)
                                         {
+                                                
                                                 message.clientid = id[i];
                                                 srand((unsigned)time(NULL));
                                                 message.messageid[0] = time(0)%254;
                                                 message.messageid[1] = rand()%255; 
-                                                if(__CAN_NOT_CLOSE__ == isend(ip[i],IPPORT_V4,&message))
+                                                if(strlen(ip[0])==0)
                                                 {
-                                                        print_error(__CAN_NOT_CLOSE__);
-                                                        continue;
+                                                }
+                                                else{
+                                                        if(__CAN_NOT_CLOSE__ == isend(ip[i],IPPORT_V4,&message))
+                                                        {
+                                                                print_error(__CAN_NOT_CLOSE__);
+                                                                continue;
+                                                        }
                                                 }
                                         }
                                 }

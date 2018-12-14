@@ -101,7 +101,6 @@ void signalHandel(int signo) {
                        {
                                 if(waitpid(pdt[i], &childStatus, WNOHANG)==pdt[i])
                                 {
-                          //               printf("process:%d has been collection\n",pdt[i]);
                                          pdt[i]=0;
                                 }
                         }
