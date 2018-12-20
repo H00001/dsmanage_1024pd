@@ -22,9 +22,6 @@ int cmd_system__0a40(unsigned  char* command,unsigned char **__result__,const ch
                 memcpy(newblock,*__result__,flag);
                 *__result__ = newblock;
         }
-        if(flag!=0)
-        {
-        }
         if(pclose(fpRead)!=0)
         {
                 return -3217;

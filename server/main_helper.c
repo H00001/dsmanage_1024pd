@@ -9,10 +9,12 @@ void writeValWithStatus(msg* __msg__, int status)
         {
                  __msg__->code = (SHELL|FAIL|CMDERROR|RESPONSE);
         }
-        else if(status == 40)
+        /**
+         * else if(status == 40)
         {
                __msg__->code = (SHELL|FAIL|BOF|RESPONSE);
         }
+        **/
 
         else if(status == -1)
         {
