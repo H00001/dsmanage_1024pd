@@ -3,20 +3,20 @@ void writeValWithStatus(msg* __msg__, int status)
 {
         if(status==0)
         {
-                __msg__->code = 0x02;
+                __msg__->code = (SUCCEED|RESPONSE|SHELL);
         }
         else if(status == -3217)
         {
-                 __msg__->code = 0x12;
+                 __msg__->code = (SHELL|FAIL|CMDERROR|RESPONSE);
         }
         else if(status == 40)
         {
-               __msg__->code = 0x32;
+               __msg__->code = (SHELL|FAIL|BOF|RESPONSE);
         }
 
         else if(status == -1)
         {
-                printf("ddddd###--%d",errno);
+        //        printf("ddddd###--%d",errno);
         }
 }
 

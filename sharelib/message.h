@@ -2,6 +2,14 @@
 #define MESSAGEIDLEN 2
 #define OPTIONLEN 4
 #define MESSAGELEN 1000
+#define REQUEST 0x01
+#define RESPONSE 0x00
+#define SHELL 0x02
+#define ISALIVE 0x04
+#define FAIL 0x10
+#define BOF 0x20
+#define CMDERROR 0x40
+#define SUCCEED 0x00
 #include<string.h>
 #include<stdio.h>
 #include<time.h>

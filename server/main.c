@@ -120,6 +120,7 @@ void signalHandel(int signo) {
 int message_deal_Hander(unsigned char * buffer,char *pathm)
 {
 	msg message;
+        char type_std[10] = {0};
         unsigned char resultbuffer[MESSAGELEN];
         inint(&message);
 	changeTomsg(buffer,&message);
@@ -131,10 +132,9 @@ int message_deal_Hander(unsigned char * buffer,char *pathm)
         {
                 return 0;
         }
-        printf("message:%d%d from %d msg:%s ",message.messageid[0],message.messageid[1],message.clientid,message.message);
         if((message.code&0x01)==1)
         {
-        	if((message.code&0x02)==2)
+        	if(message.code==(REQUEST|SHELL))
         	{
                         if(((*(message.message))=='c')&&((*((message.message+1)))=='d'))
                         {
@@ -148,13 +148,23 @@ int message_deal_Hander(unsigned char * buffer,char *pathm)
                                 return 0;
                         }
         		writeValWithStatus(&message, cmd_system__0a40(message.message,resultbuffer,MESSAGELEN,pathm));
-			printf("type:%s","shell\n"); 
+                        strcpy(type_std,"shell");
 			writeMessage(&message,resultbuffer);
 		}
+                else if(message.code==(REQUEST|ISALIVE))
+                {
+                        strcpy(type_std,"alive");
+                        sendConIno_(tc.server_v4[0],tc.sport,0,tc.client_id);
+                }
 		else if((message.code&0x02)==0)
 		{
 
       		}
+                else
+                {
+                }
+                printf("message:%d%d\t type:%s\t from:%d\n",message.messageid[0],message.messageid[1],type_std,message.clientid);
+                memset(type_std,0,10);
 		if(isend(tc.server_v4[0],tc.sport,&message)!=0)
 		{
 			print_sw(DEBUG,PUTERR,"\nerror\n");

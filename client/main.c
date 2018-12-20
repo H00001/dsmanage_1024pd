@@ -19,7 +19,6 @@ int main(int argc, char** argv)
                 time_t t;
                 msg message;
                 inint(&message);
-                message.code = 3;
                 while(1){
                                 //printf("sh #:");
                                 //fflush(stdout);
@@ -29,11 +28,39 @@ int main(int argc, char** argv)
                                 if(strlen(message.message)==0||message.message[0]=='\n')
                                 {
                                 }
+                                
+                                else if(message.message[0]=='s'&&
+                                        message.message[1]=='t'&&
+                                        message.message[2]=='d'&&
+                                        message.message[3]==':')
+                                {
+
+                                        if(strcmp(message.message+4,"who")==0)
+                                        {
+                                                
+                                                for(int i = 0 ;i< CLILEN_V4;i++)
+                                               
+                                               {                           
+                                                        message.clientid = id[i];
+                                                        message.code = 0x01|0x04;
+                                                        if(strlen(ip[0])==0)
+                                                        {
+                                                        }
+                                                        if(__CAN_NOT_CLOSE__ == isend(ip[i],IPPORT_V4,&message))
+                                                        {
+                                                                print_error(__CAN_NOT_CLOSE__);
+                                                                continue;
+                                                        }
+
+                                                }
+                                        }
+                                }
                                 else
                                 {
                                         for(int i = 0 ;i< CLILEN_V4;i++)
                                         {
                                                 
+                                                message.code = 0x01|0x02;
                                                 message.clientid = id[i];
                                                 srand((unsigned)time(NULL));
                                                 message.messageid[0] = time(0)%254;
@@ -56,3 +83,9 @@ int main(int argc, char** argv)
         }
         return (EXIT_SUCCESS);
 }
+//int sendMsg_002b(msg *__obj__)
+//{
+        
+
+
+//}

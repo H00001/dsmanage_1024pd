@@ -37,11 +37,11 @@ void waittingforreceive()
                 {
                         if((message.code&0x80)==0x80)//precedence of operator is important
                         {
-                                printf("\033[31;49;1m●\033[39;49;0m client %d has been shutdown",message.clientid);
+                                printf("\033[31;49;1m●[WARN]\033[39;49;0m client %d has been shutdown",message.clientid);
                         }
                         else if((message.code&0x80)==0x00)
                         {
-                                printf("\033[32;49;1m●\033[39;49;0m client %d is alive",message.clientid);
+                                printf("\033[32;49;1m●[INFO]\033[39;49;0m client %d has been online  ",message.clientid);
                         }
                         else
                         {
@@ -59,22 +59,31 @@ void waittingforreceive()
                 }
                 else
                 {
-                        if((message.code&0x01)==0x00&&(message.code&0x10)==0x00)
+                        if(message.code==(RESPONSE|SUCCEED|SHELL))
                         {
                                 printf("\033[32;49;1m●\033[39;49;0m client:%d type:shell\n",message.clientid);
+                                printf("%s\n",message.message);
                         }
-                        else if(message.code==0x02)
-                        {
-                        }
-                        else if(message.code==0x12)
+                        else if(message.code==(FAIL|RESPONSE|SHELL|CMDERROR))
                         {
                                 printf("\033[31;49;1m●\033[39;49;0m client:%d type:cmd error\n",message.clientid);
                         }
-                        else if(message.code==0x32)
+                        else if(message.code==(FAIL|RESPONSE|SHELL|BOF))
                         {
                                 printf("\033[33;49;1m●\033[39;49;0m client:%d type:too long\n",message.clientid);
-                        }
                         printf("%s\n",message.message);
+                        }
+                        /**
+                        for(int i = 0;i<strlen(message.message);i++)
+                        {
+                                if(message.message[i]=='\n')
+
+                               {
+
+                                       message.message[i] = '\t';
+                               }
+                        }
+                        **/
                 }
     }
 

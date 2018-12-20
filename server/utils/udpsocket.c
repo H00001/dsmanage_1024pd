@@ -14,15 +14,14 @@ int inint__cd23(int *socket_descriptor, struct sockaddr_in *sin ,int port )
             return -1;
     }
    if(bind(*socket_descriptor,(const struct sockaddr *)sin,sizeof(*sin)))
-        {
+     {
                 //fail;
                 return -2;
-        }
+     }
         else
         {
-
         }
-        return sin_len;
+                return sin_len;
 
 }
 
