@@ -121,9 +121,11 @@ int message_deal_Hander(unsigned char * buffer,char *pathm)
 {
 	msg message;
         char type_std[10] = {0};
-        unsigned char resultbuffer[MESSAGELEN];
         inint(&message);
 	changeTomsg(buffer,&message);
+        unsigned char ** basep;
+        unsigned char * readp = NULL;
+        basep = &readp;
         if(message.clientid!=tc.client_id)
         {
                 return 0;
@@ -147,14 +149,30 @@ int message_deal_Hander(unsigned char * buffer,char *pathm)
 	                        }
                                 return 0;
                         }
-        		writeValWithStatus(&message, cmd_system__0a40(message.message,resultbuffer,MESSAGELEN,pathm));
+        		writeValWithStatus(&message, cmd_system__0a40(message.message,basep,pathm));
                         strcpy(type_std,"shell");
-			writeMessage(&message,resultbuffer);
+                        
+                        for(int i = 0;i<strlen(*basep)/MESSAGELEN+1;i++)
+                        {
+			        writeMessage(&message,(*basep)+i*MESSAGELEN);
+                                if(isend(tc.server_v4[0],tc.sport,&message)!=0) //sendmesg;
+                                {
+                                        message.option[0] = i+1;
+                                        print_sw(DEBUG,PUTERR,"\nerror\n");
+                                }
+
+                        }
+                        free(*basep);
+                        
 		}
                 else if(message.code==(REQUEST|ISALIVE))
                 {
                         strcpy(type_std,"alive");
                         sendConIno_(tc.server_v4[0],tc.sport,0,tc.client_id);
+		        if(isend(tc.server_v4[0],tc.sport,&message)!=0) //sendmesg;
+		        {
+			        print_sw(DEBUG,PUTERR,"\nerror\n");
+		        }
                 }
 		else if((message.code&0x02)==0)
 		{
@@ -165,10 +183,6 @@ int message_deal_Hander(unsigned char * buffer,char *pathm)
                 }
                 printf("message:%d%d\t type:%s\t from:%d\n",message.messageid[0],message.messageid[1],type_std,message.clientid);
                 memset(type_std,0,10);
-		if(isend(tc.server_v4[0],tc.sport,&message)!=0)
-		{
-			print_sw(DEBUG,PUTERR,"\nerror\n");
-		}
 	}
 	return 0;
 

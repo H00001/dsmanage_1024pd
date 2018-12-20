@@ -7,16 +7,9 @@ void inint(msg * obj)
 int writeMessage(msg * obj,unsigned const char * _message_3c21)
 {
         clearMessage(obj);
-        if(strlen((const char *)_message_3c21) > MESSAGELEN -1)
-        {
-                obj->code = 48;
-                return -1;
-        }
-        else{
-    	        for(int i = 0;_message_3c21[i]!=0;i++)
-	        {
-	    	        obj->message[i] = _message_3c21[i];
-                }
+    	for(int i = 0;i<MESSAGELEN;i++)
+	{
+	        obj->message[i] = _message_3c21[i];
         }
         return 0;
 }

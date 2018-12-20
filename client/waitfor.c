@@ -2,22 +2,22 @@
 
 int inint__cd23(int *socket_descriptor, struct sockaddr_in *sin)
 {
-    int sin_len;
-    bzero(sin,sizeof(struct sockaddr_in));
-    sin->sin_family=AF_INET;
-    sin->sin_addr.s_addr=htonl(INADDR_ANY);
-    sin->sin_port=htons(1024);
-    sin_len=sizeof(*sin);
-    *socket_descriptor=socket(AF_INET,SOCK_DGRAM,0);
-    if(*socket_descriptor<0)
-    {
-            return -1;
-    }
-   if(bind(*socket_descriptor,(const struct sockaddr *)sin,sizeof(*sin)))
-   {
-            return -2;
-   }
-   return sin_len;
+        int sin_len;
+        bzero(sin,sizeof(struct sockaddr_in));
+        sin->sin_family=AF_INET;
+         sin->sin_addr.s_addr=htonl(INADDR_ANY);
+        sin->sin_port=htons(1024);
+        sin_len=sizeof(*sin);
+        *socket_descriptor=socket(AF_INET,SOCK_DGRAM,0);
+        if(*socket_descriptor<0)
+        {
+             return -1;
+        }
+        if(bind(*socket_descriptor,(const struct sockaddr *)sin,sizeof(*sin)))
+        {
+           return -2;
+        }
+        return sin_len;
 
 }
 
@@ -71,21 +71,12 @@ void waittingforreceive()
                         else if(message.code==(FAIL|RESPONSE|SHELL|BOF))
                         {
                                 printf("\033[33;49;1m●\033[39;49;0m client:%d type:too long\n",message.clientid);
-                        printf("%s\n",message.message);
+                                printf("%s\n",message.message);
                         }
-                        /**
-                        for(int i = 0;i<strlen(message.message);i++)
-                        {
-                                if(message.message[i]=='\n')
-
-                               {
-
-                                       message.message[i] = '\t';
-                               }
-                        }
-                        **/
+        
                 }
-    }
+    
+        }
 
 
 }

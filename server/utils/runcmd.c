@@ -1,28 +1,26 @@
 #include "runcmd.h"
-int cmd_system__0a40(unsigned  char* command,unsigned char *__result__,int bufferlen,const char * path)
+int cmd_system__0a40(unsigned  char* command,unsigned char **__result__,const char * path)
 {
         chdir(path); 
         int flag = 0;
-        /**
-        if(((*command)=='c')&&((*(command+1))=='d'))
+	*__result__ = malloc(ONCEREADBUFFERLEN);
+        memset(*__result__,0,ONCEREADBUFFERLEN);
+        if(*__result__ == NULL)
         {
-                int popc = 3;
-                while(*(command+popc)!='\n')
-                        popc ++;
-                *(command+popc) = 0;
-                strcpy(pathm,command+3);
+                //deal malloc fail exception
         }
-       **/
         FILE *fpRead =  popen((const char *)command, "r");
         if(!fpRead)
         {
 	       return errno;
         }
-        memset(__result__,0,bufferlen);
-        
-        if((flag=fread(__result__,1,bufferlen-1,fpRead))==bufferlen-1)
+        unsigned char * newblock = NULL;
+        while(fread((*__result__)+flag,1,ONCEREADBUFFERLEN,fpRead)==ONCEREADBUFFERLEN)
         {
-                return 40;
+                flag += ONCEREADBUFFERLEN;
+                newblock = calloc(flag+ONCEREADBUFFERLEN,1);
+                memcpy(newblock,*__result__,flag);
+                *__result__ = newblock;
         }
         if(flag!=0)
         {
