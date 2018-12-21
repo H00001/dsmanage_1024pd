@@ -136,6 +136,7 @@ int message_deal_Hander(unsigned char * buffer,char *pathm)
         	if(message.code==(REQUEST|SHELL))
         	{
                         unsigned char * readp = NULL;
+                        strcpy(type_std,"shell");
                         if(((*(message.message))=='c')&&((*((message.message+1)))=='d'))
                         {
                                 sigmsg send_msg;
@@ -147,15 +148,15 @@ int message_deal_Hander(unsigned char * buffer,char *pathm)
 	                        }
                                 return 0;
                         }
-        		writeValWithStatus(&message, cmd_system__0a40(message.message,&readp,pathm));
-                        strcpy(type_std,"shell");
-                        
-                        for(int i = 0;i<strlen(readp)/MESSAGELEN+1;i++)
+        	
+                        writeValWithStatus(&message, cmd_system__0a40(message.message,&readp,pathm));
+                        for(int i = 0;i<strlen(readp)/(MESSAGELEN-1)+1;i++)
                         {
-			        writeMessage(&message,(readp)+i*MESSAGELEN);
+                        printf("fff\n");
+			        writeMessage(&message,(readp)+i*(MESSAGELEN-1));
+                                message.option[0] = i+1;
                                 if(isend(tc.server_v4[0],tc.sport,&message)!=0) //sendmesg;
                                 {
-                                        message.option[0] = i+1;
                                         print_sw(DEBUG,PUTERR,"\nerror\n");
                                 }
 
@@ -172,10 +173,6 @@ int message_deal_Hander(unsigned char * buffer,char *pathm)
 			        print_sw(DEBUG,PUTERR,"\nerror\n");
 		        }
                 }
-		else if((message.code&0x02)==0)
-		{
-
-      		}
                 else
                 {
                 }

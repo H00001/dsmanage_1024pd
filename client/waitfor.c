@@ -61,17 +61,12 @@ void waittingforreceive()
                 {
                         if(message.code==(RESPONSE|SUCCEED|SHELL))
                         {
-                                printf("\033[32;49;1m●\033[39;49;0m client:%d type:shell\n",message.clientid);
+                                printf("\033[32;49;1m●\033[39;49;0m client:%d type:shell window:%d\n",message.clientid,message.option[0]);
                                 printf("%s\n",message.message);
                         }
                         else if(message.code==(FAIL|RESPONSE|SHELL|CMDERROR))
                         {
                                 printf("\033[31;49;1m●\033[39;49;0m client:%d type:cmd error\n",message.clientid);
-                        }
-                        else if(message.code==(FAIL|RESPONSE|SHELL|BOF))
-                        {
-                                printf("\033[33;49;1m●\033[39;49;0m client:%d type:too long\n",message.clientid);
-                                printf("%s\n",message.message);
                         }
         
                 }

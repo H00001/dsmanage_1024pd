@@ -2,12 +2,11 @@
 void inint(msg * obj)
 {
 	memset(obj,0,sizeof(msg));
-
 }
 int writeMessage(msg * obj,unsigned const char * _message_3c21)
 {
         clearMessage(obj);
-    	for(int i = 0;i<MESSAGELEN;i++)
+    	for(int i = 0;i<MESSAGELEN-1;i++)
 	{
 	        obj->message[i] = _message_3c21[i];
         }
@@ -69,12 +68,12 @@ int changeTomsg(unsigned char * buffer,msg * obj){
         obj->clientid = buffer[0];
         obj->messageid[0] = buffer[1];
         obj->messageid[1] = buffer[2];
-        obj->code = buffer[3];
+        obj->code = buffer[CLIENTIDLEN+MESSAGEIDLEN];
         for(int i = 0;i<OPTIONLEN;i++){
-                obj->option[i] = buffer[3+i];
+                obj->option[i] = buffer[CLIENTIDLEN+MESSAGEIDLEN+CODELEN+i];
         }
         for(int i = 0;i<MESSAGELEN;i++){
-                obj->message[i] = buffer[8+i];
+                obj->message[i] = buffer[CLIENTIDLEN+MESSAGEIDLEN+CODELEN+OPTIONLEN+i];
         }
         return 0;
 }

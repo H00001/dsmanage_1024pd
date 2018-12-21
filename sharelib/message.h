@@ -1,5 +1,7 @@
 #define __MESSAGE_H__
 #define MESSAGEIDLEN 2
+#define CLIENTIDLEN 1
+#define CODELEN 1
 #define OPTIONLEN 4
 #define MESSAGELEN 1000
 #define REQUEST 0x01

@@ -20,9 +20,6 @@ int main(int argc, char** argv)
                 msg message;
                 inint(&message);
                 while(1){
-                                //printf("sh #:");
-                                //fflush(stdout);
-
                                 fgets (message.message, MESSAGELEN-1, stdin);
                                 message.message[strlen(message.message)-1] = 0;
                                 if(strlen(message.message)==0||message.message[0]=='\n')
@@ -39,7 +36,6 @@ int main(int argc, char** argv)
                                         {
                                                 
                                                 for(int i = 0 ;i< CLILEN_V4;i++)
-                                               
                                                {                           
                                                         message.clientid = id[i];
                                                         message.code = 0x01|0x04;
