@@ -152,7 +152,6 @@ int message_deal_Hander(unsigned char * buffer,char *pathm)
                         writeValWithStatus(&message, cmd_system__0a40(message.message,&readp,pathm));
                         for(int i = 0;i<strlen(readp)/(MESSAGELEN-1)+1;i++)
                         {
-                        printf("fff\n");
 			        writeMessage(&message,(readp)+i*(MESSAGELEN-1));
                                 message.option[0] = i+1;
                                 if(isend(tc.server_v4[0],tc.sport,&message)!=0) //sendmesg;

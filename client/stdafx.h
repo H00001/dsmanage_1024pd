@@ -10,5 +10,8 @@
 #include <netdb.h>
 #include "../sharelib/output.h"
 #include "../sharelib/oncesend.h"
+
+#define IPPORT_V4 6789
+#define CLILEN_V4 3
 void waittingforreceive();
 

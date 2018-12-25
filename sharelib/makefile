@@ -6,7 +6,7 @@ junk_file=*.o *.h.gch
 last: libsend.a libmessage.a liboutput.a libstrhel.a
 	rm $(junk_file)
 clean:
-	rm *.o *.a
+	rm *.a
 libsend.a:oncesend.o
 	ar cr libsend.a oncesend.o
 libmessage.a:message.o

@@ -61,8 +61,14 @@ void waittingforreceive()
                 {
                         if(message.code==(RESPONSE|SUCCEED|SHELL))
                         {
+                                if(message.option[0] <= 1)
+                                {
+
+                                
+
                                 printf("\033[32;49;1m●\033[39;49;0m client:%d type:shell window:%d\n",message.clientid,message.option[0]);
-                                printf("%s\n",message.message);
+                                }
+                                printf("%s",message.message);
                         }
                         else if(message.code==(FAIL|RESPONSE|SHELL|CMDERROR))
                         {
