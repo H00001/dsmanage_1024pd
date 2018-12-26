@@ -13,7 +13,6 @@
 #define CMDERROR 0x40
 #define SUCCEED 0x00
 #include<string.h>
-#include<stdio.h>
 #include<time.h>
 #include<stdlib.h>
 #include "myerror.h"
