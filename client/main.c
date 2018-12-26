@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-char ip[CLILEN_V4][16]={"127.0.0.1","192.168.1.103",""};
+char ip[CLILEN_V4][16]={"127.0.0.1","192.168.1.103","123.207.72.126"};
 char id[CLILEN_V4] = {121,120,123};
 int main(int argc, char** argv) 
 {
@@ -76,6 +76,7 @@ void message_handle_input(int s_direscpt,int *cpid,unsigned short *mids)
                         for(int i = 0 ;i< CLILEN_V4;i++)
                         {
 
+                                
                                 message.code = REQUEST|SHELL;
                                 message.clientid = id[i];
                                 srand((unsigned)time(NULL));
@@ -92,6 +93,7 @@ void message_handle_input(int s_direscpt,int *cpid,unsigned short *mids)
                                 }
                                 else
                                 {
+                                        printf("%s\n",ip[i]);
                                         if(__CAN_NOT_CLOSE__ == isend_m(s_direscpt,ip[i],IPPORT_V4,&message))
                                         {
                                                 print_error(__CAN_NOT_CLOSE__);

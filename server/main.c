@@ -58,7 +58,7 @@ int main() {
         {
                 recvfrom(socket_descriptor,&buffer,sizeof(buffer),0,(struct sockaddr *)&sin,&sin_len);
 		if(0==(cli_pro_id=fork())){
-			message_deal_Hander(buffer,pathm,sin.sin_addr,htons(sin.sin_port));
+			message_deal_Hander(socket_descriptor, buffer,pathm,sin.sin_addr,htons(sin.sin_port));
 			return 0;
 		}
 		else
@@ -117,7 +117,7 @@ void signalHandel(int signo) {
     	return;
 
 }
-int message_deal_Hander(unsigned char * buffer,char *pathm,struct in_addr aip,short int port)
+int message_deal_Hander(int sockdscp,unsigned char * buffer,char *pathm,struct in_addr aip,short int port)
 {
         char * ip = inet_ntoa(aip);
 	msg message;
@@ -155,7 +155,7 @@ int message_deal_Hander(unsigned char * buffer,char *pathm,struct in_addr aip,sh
                         {
 			        writeMessage(&message,(readp)+i*(MESSAGELEN-1));
                                 message.option[0] = i+1;
-                                if(isend(ip,port,&message)!=0) //sendmesg;
+                                if(isend_m(sockdscp,ip,port,&message)!=0) //sendmesg;
                                 {
                                         print_sw(DEBUG,PUTERR,"\nerror\n");
                                 }
@@ -168,7 +168,7 @@ int message_deal_Hander(unsigned char * buffer,char *pathm,struct in_addr aip,sh
                 {
                         strcpy(type_std,"alive");
                         sendConIno_(ip,port,0,tc.client_id);
-		        if(isend(ip,port,&message)!=0) //sendmesg;
+		        if(isend_m(sockdscp,ip,port,&message)!=0) //sendmesg;
 		        {
 			        print_sw(DEBUG,PUTERR,"\nerror\n");
 		        }

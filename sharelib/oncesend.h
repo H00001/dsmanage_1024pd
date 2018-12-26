@@ -5,3 +5,4 @@
 #include <unistd.h>
 
 int isend(unsigned const char * ip,int port,msg *message);
+int isend_m(int socket_descriptor,unsigned const char * ip,int port,msg *message);
