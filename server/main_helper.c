@@ -22,7 +22,7 @@ void writeValWithStatus(msg* __msg__, int status)
         }
 }
 
-int sendConIno_(unsigned char *__ip,int __port, int type,int client_id_12bf)
+int sendConIno_(int desc, unsigned char *__ip,int __port, int type,int client_id_12bf)
 {
         msg *inmsg = (msg *)malloc(sizeof(msg));
         if(inmsg==NULL)
@@ -44,7 +44,7 @@ int sendConIno_(unsigned char *__ip,int __port, int type,int client_id_12bf)
                 }
 
         }
-        int sendval = isend(__ip,__port,inmsg);
+        int sendval = isend_m(desc,__ip,__port,inmsg);
         if(sendval!=0)
         {
                return sendval;

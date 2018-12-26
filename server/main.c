@@ -1,5 +1,6 @@
 #include "stdafx.h"
 static twc tc;
+int socket_descriptor;
 key_t uniquekey = 10000;
 static  int msgid;
 int pdt[PDTLEN]; 
@@ -27,7 +28,7 @@ int main() {
         int erro = __main__init();
         unsigned int sin_len = sizeof(struct sockaddr);
 	int cli_pro_id;
-        int socket_descriptor;
+        socket_descriptor;
         struct sockaddr_in sin;
         char pathm[MBUFSIZ];
         getcwd(pathm,MBUFSIZ);
@@ -53,7 +54,7 @@ int main() {
                 printf("[INFO] waiting for data form server \n");
         }
         
-        sendConIno_(tc.server_v4[0],tc.sport,0,tc.client_id);
+        sendConIno_(socket_descriptor,tc.server_v4[0],tc.sport,0,tc.client_id);
         while(1)
         {
                 recvfrom(socket_descriptor,&buffer,sizeof(buffer),0,(struct sockaddr *)&sin,&sin_len);
@@ -108,7 +109,7 @@ void signalHandel(int signo) {
 	}
 	else if(signo==SIGINT)
 	{
-                sendConIno_(tc.server_v4[0],tc.sport,1,tc.client_id);
+                sendConIno_(socket_descriptor,tc.server_v4[0],tc.sport,1,tc.client_id);
 		exit(1);
 	}
 	else if(signo==SIGHUP)
@@ -167,11 +168,7 @@ int message_deal_Hander(int sockdscp,unsigned char * buffer,char *pathm,struct i
                 else if(message.code==(REQUEST|ISALIVE))
                 {
                         strcpy(type_std,"alive");
-                        sendConIno_(ip,port,0,tc.client_id);
-		        if(isend_m(sockdscp,ip,port,&message)!=0) //sendmesg;
-		        {
-			        print_sw(DEBUG,PUTERR,"\nerror\n");
-		        }
+                        sendConIno_(sockdscp,ip,port,0,tc.client_id);
                 }
                 else
                 {

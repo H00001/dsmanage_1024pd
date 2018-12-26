@@ -14,7 +14,7 @@
 #define STD_MSG 4000
 #define MBUFSIZ 30
 #define CONTFILE "wd1024.conf"
-int sendConIno_(unsigned char *__ip,int __port, int type,int client_id_12bf);
 void writeValWithStatus(msg* __msg__, int status);
 void signalHandel(int signo);
 int message_deal_Hander(int sockdscp,unsigned char * buffer,char *pathm,struct in_addr aip,short int port);
+int sendConIno_(int desc, unsigned char *__ip,int __port, int type,int client_id_12bf);
