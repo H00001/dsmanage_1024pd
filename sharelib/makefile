@@ -16,10 +16,10 @@ liboutput.a:output.o
 libstrhel.a:str_help.o
 	ar cr libstrhel.a str_help.o
 message.o:$(message_lib_src)
-	gcc -c $(message_lib_src)
+	gcc -c $(message_lib_src) -std=gnu11
 output.o:$(output_lib_src)
-	gcc -c $(output_lib_src)
+	gcc -c $(output_lib_src) -std=gnu11
 str_help.o:$(strhel_lib_src)
-	gcc -c $(strhel_lib_src)
+	gcc -c $(strhel_lib_src) -std=gnu11
 oncesend.o:$(send_lib_src)
-	gcc -c $(send_lib_src)
+	gcc -c $(send_lib_src) -std=gnu11
