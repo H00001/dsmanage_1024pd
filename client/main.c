@@ -2,10 +2,12 @@
 
 char ip[CLILEN_V4][16]={"127.0.0.1","192.168.1.103",""};
 char id[CLILEN_V4] = {121,120,123};
-void message_handle_input(int *cpid,unsigned short *mids);
 int main(int argc, char** argv) 
 {
+        struct sockaddr_in sin;
+        int s_direscpt = inint__cd23(&sin,1024);
         /**
+
          * test code 
          */
         unsigned short mids[20];
@@ -17,11 +19,11 @@ int main(int argc, char** argv)
 	int cpid = 0;
 	if((cpid=fork())==0)
 	{
-		waittingforreceive();
+		waittingforreceive(s_direscpt,&sin);
 	}
 	else
 	{	
-                message_handle_input(&cpid,mids);
+                message_handle_input(s_direscpt,&cpid,mids);
         }
         return (EXIT_SUCCESS);
 }
@@ -31,7 +33,7 @@ int main(int argc, char** argv)
 
 
 //}
-void message_handle_input(int *cpid,unsigned short *mids)
+void message_handle_input(int s_direscpt,int *cpid,unsigned short *mids)
 {
 
         msg message;
@@ -59,7 +61,7 @@ void message_handle_input(int *cpid,unsigned short *mids)
                                         if(strlen(ip[0])==0)
                                         {
                                         }
-                                        if(__CAN_NOT_CLOSE__ == isend(ip[i],IPPORT_V4,&message))
+                                        if(__CAN_NOT_CLOSE__ == isend_m(s_direscpt,ip[i],IPPORT_V4,&message))
                                         {
                                                 print_error(__CAN_NOT_CLOSE__);
                                                 continue;
@@ -90,7 +92,7 @@ void message_handle_input(int *cpid,unsigned short *mids)
                                 }
                                 else
                                 {
-                                        if(__CAN_NOT_CLOSE__ == isend(ip[i],IPPORT_V4,&message))
+                                        if(__CAN_NOT_CLOSE__ == isend_m(s_direscpt,ip[i],IPPORT_V4,&message))
                                         {
                                                 print_error(__CAN_NOT_CLOSE__);
                                                 continue;
