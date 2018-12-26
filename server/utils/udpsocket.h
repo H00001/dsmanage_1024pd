@@ -6,4 +6,4 @@
 #include <netdb.h>
 #include <stdlib.h>
 #include<string.h>
-int inint__cd23(int *socket_descriptor, struct sockaddr_in *sin ,int port );
+int inint__cd23(struct sockaddr_in *sin ,int port);

@@ -30,18 +30,20 @@ int readconfig(char * path, twc* config)
 			        strncpy((char *)param,(const char *)buffer+strlen(SPORT),strlen((const char *)buffer)-strlen(SPORT));	
                                 config->sport = atoi((const char *)param);
                         }
+                       
 			else if(strstr((const char *)buffer,CLIID)!=NULL)
 			{
 			        strncpy((char *)param,(const char *)buffer+strlen(CLIID),strlen((const char *)buffer)-strlen(CLIID));	
                                 config->client_id = (unsigned int)atoi((const char *)param);
                         }
-			else if(strstr((const char *)buffer,SERVER)!=NULL)
+		else if(strstr((const char *)buffer,SERVER)!=NULL)
 			{
 			        strncpy((char *)param,(const char *)buffer+strlen(SERVER),strlen((const char *)buffer)-strlen(SERVER));	
                                 memcpy(config->server_v4[serverl],param,16);
                                 //there have a buffer ,config->server_v4 could out of bound
                                 serverl ++;
                         }
+                
                         else{
                         }
 		}
