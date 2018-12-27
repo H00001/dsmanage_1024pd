@@ -1,4 +1,4 @@
 output:
-	gcc *.c -static-libgfortran ../sharelib/*.a -std=gnu11
+	gcc *.c -static-libgfortran ./lib/*.a -std=gnu11
 clean:
 	rm  *.out

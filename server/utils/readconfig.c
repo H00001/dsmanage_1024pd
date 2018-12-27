@@ -1,7 +1,6 @@
 #include "readconfig.h"
 int readconfig(char * path, twc* config)
 {
-
 	FILE * fp;
 	unsigned char buffer[BUFFERREDLEN] = { 0 };
         unsigned char param[20] = { 0 };

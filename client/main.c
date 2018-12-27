@@ -7,7 +7,6 @@ int main(int argc, char** argv)
         struct sockaddr_in sin;
         int s_direscpt = inint__cd23(&sin,1024);
         /**
-
          * test code 
          */
         unsigned short mids[20];

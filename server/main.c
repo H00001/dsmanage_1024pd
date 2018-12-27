@@ -1,8 +1,8 @@
 #include "stdafx.h"
-static twc tc;
+twc tc;
 int socket_descriptor;
 key_t uniquekey = 10000;
-static  int msgid;
+static int msgid;
 int pdt[PDTLEN]; 
 int __main__init()
 {
@@ -11,6 +11,7 @@ int __main__init()
         signal(SIGCHLD,&signalHandel);  //reigster the function that deal with defunct process
         signal(SIGHUP,&signalHandel);  //reigster the function that deal with defunct process
 	signal(SIGINT,&signalHandel);  //reigster the function that deal with ctrl_c request
+
         if((msgid = msgget(uniquekey, IPC_CREAT |  0666)) == -1) {
 	        print_error(errno);
 	        exit(errno);
@@ -28,7 +29,6 @@ int main() {
         int erro = __main__init();
         unsigned int sin_len = sizeof(struct sockaddr);
 	int cli_pro_id;
-        socket_descriptor;
         struct sockaddr_in sin;
         char pathm[MBUFSIZ];
         getcwd(pathm,MBUFSIZ);
@@ -51,7 +51,7 @@ int main() {
         }
         else
         {
-                printf("[INFO] waiting for data form server \n");
+                printf("[INFO] WAITFOR DATA\n");
         }
         
         sendConIno_(socket_descriptor,tc.server_v4[0],tc.sport,0,tc.client_id);
@@ -93,7 +93,7 @@ int main() {
         return (EXIT_SUCCESS);
 }
 
-void signalHandel(int signo) {
+/**void signalHandel(int signo) {
 	//the main use is deal with the defunct process
 	if(signo==SIGCHLD){
                 int childStatus;
@@ -118,6 +118,7 @@ void signalHandel(int signo) {
     	return;
 
 }
+**/
 int message_deal_Hander(int sockdscp,unsigned char * buffer,char *pathm,struct in_addr aip,short int port)
 {
         char * ip = inet_ntoa(aip);

@@ -1,24 +1,4 @@
 #include "stdafx.h"
-
-/**int inint__cd23(struct sockaddr_in *sin,int port)
-{
-        int descript = socket(AF_INET,SOCK_DGRAM,0);
-        memset(sin,0,sizeof(struct sockaddr_in));
-        sin->sin_family=AF_INET;
-        sin->sin_addr.s_addr=htonl(INADDR_ANY);
-        sin->sin_port=htons(port);
-        if(descript<0)
-        {
-             return -1;
-        }
-        if(bind(descript,(const struct sockaddr *)sin,sizeof(*sin)))
-        {
-           return -2;
-        }
-        return descript;
-}
-**/
-
 void waittingforreceive(int socket_descriptor,struct sockaddr_in * sin)
 {
         int sin_len = sizeof(struct sockaddr_in);

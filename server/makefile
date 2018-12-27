@@ -1,2 +1,2 @@
 out:
-	gcc -g main.c main_helper.c  utils/*.c  -L../sharelib/ -lmessage -loutput -lstrhel -lsend -std=gnu11
+	gcc -g main.c main_helper.c signal_handle.c  utils/*.c  -L./lib/ -lmessage -loutput -lstrhel -lsend -std=gnu11
