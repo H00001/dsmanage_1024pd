@@ -1,5 +1,6 @@
 #include "../sharelib/output.h"
-#include "../sharelib/message.h"
+#include "../sharelib/oncesend.h"
+
 #define IPPORT_V4 6789
 #define CLILEN_V4 3
 #include<netinet/in.h>

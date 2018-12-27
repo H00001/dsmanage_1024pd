@@ -5,6 +5,8 @@
 	git add *
 if [ $# -eq 0 ]; then
 	echo "please input commit message"
+elif [ $1 == '-t' ]; then
+	echo "delete succeed"
 else
 	git commit -m "$1"
 	git push origin master

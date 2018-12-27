@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
-char ip[CLILEN_V4][16]={"127.0.0.1","192.168.1.103","123.207.72.126"};
-char id[CLILEN_V4] = {121,120,123};
+char ip[CLILEN_V4][16]={"127.0.0.1","39.106.46.179","123.207.72.126"};
+char id[CLILEN_V4] = {121,128,123};
 int main(int argc, char** argv) 
 {
         struct sockaddr_in sin;

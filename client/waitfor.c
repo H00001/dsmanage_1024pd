@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-int inint__cd23(struct sockaddr_in *sin,int port)
+/**int inint__cd23(struct sockaddr_in *sin,int port)
 {
         int descript = socket(AF_INET,SOCK_DGRAM,0);
         memset(sin,0,sizeof(struct sockaddr_in));
@@ -17,6 +17,7 @@ int inint__cd23(struct sockaddr_in *sin,int port)
         }
         return descript;
 }
+**/
 
 void waittingforreceive(int socket_descriptor,struct sockaddr_in * sin)
 {
