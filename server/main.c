@@ -93,32 +93,6 @@ int main() {
         return (EXIT_SUCCESS);
 }
 
-/**void signalHandel(int signo) {
-	//the main use is deal with the defunct process
-	if(signo==SIGCHLD){
-                int childStatus;
-                for(int i = 0;i<PDTLEN;i++){
-                       if(pdt[i]!=0)
-                       {
-                                if(waitpid(pdt[i], &childStatus, WNOHANG)==pdt[i])
-                                {
-                                         pdt[i]=0;
-                                }
-                        }
-                }
-	}
-	else if(signo==SIGINT)
-	{
-                sendConIno_(socket_descriptor,tc.server_v4[0],tc.sport,1,tc.client_id);
-		exit(1);
-	}
-	else if(signo==SIGHUP)
-	{
-        }
-    	return;
-
-}
-**/
 int message_deal_Hander(int sockdscp,unsigned char * buffer,char *pathm,struct in_addr aip,short int port)
 {
         char * ip = inet_ntoa(aip);

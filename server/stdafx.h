@@ -1,14 +1,13 @@
-#include "utils/runcmd.h"
 #include <sys/ipc.h>
 #include <sys/msg.h>
 #include <sys/types.h>
-#include "../sharelib/oncesend.h"
-#include "../sharelib/output.h"
-//#include "utils/udpsocket.h"
-#include "utils/readconfig.h"
 #include <signal.h>
 #include <sys/wait.h>
 #include <string.h>
+#include "lib/oncesend.h"
+#include "lib/output.h"
+#include "utils/readconfig.h"
+#include "utils/runcmd.h"
 #define CLIENTID 1
 #define PDTLEN 8
 #define STD_MSG 4000

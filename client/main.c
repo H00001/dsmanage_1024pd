@@ -14,7 +14,7 @@ int main(int argc, char** argv)
          * end
          */
 
-//        print_first();
+        print_first();
 	int cpid = 0;
 	if((cpid=fork())==0)
 	{
@@ -71,6 +71,7 @@ void message_handle_input(int s_direscpt,int *cpid,unsigned short *mids)
                 }
                 else
                 {
+                        doChain(message.message);
                         time_t t;
                         for(int i = 0 ;i< CLILEN_V4;i++)
                         {

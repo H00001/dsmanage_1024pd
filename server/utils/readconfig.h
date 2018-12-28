@@ -6,7 +6,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include "../../sharelib/str_help.h"
+#include "../lib/str_help.h"
 #define CLIID "clientid="
 #define SPORT "sport="
 #define LPORT "lport="
