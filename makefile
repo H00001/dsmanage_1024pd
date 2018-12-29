@@ -5,6 +5,7 @@
 if [ $# -eq 0 ]; then
 	echo "please input commit message"
 elif [ $1 == '-t' ]; then
+	find . -name "*.a"|xargs rm -f
 	echo "delete succeed"
 else
 	git commit -m "$1"
