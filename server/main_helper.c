@@ -24,6 +24,7 @@ void writeValWithStatus(msg* __msg__, int status)
 
 int sendConIno_(int desc, unsigned char *__ip,int __port, int type,int client_id_12bf)
 {
+//        printf("ip:%s:port:%d\n",__ip,__port);
         msg *inmsg = (msg *)malloc(sizeof(msg));
         if(inmsg==NULL)
         {

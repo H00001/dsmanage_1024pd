@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
-char ip[CLILEN_V4][16]={"127.0.0.1","39.106.46.179","123.207.72.126"};
-char id[CLILEN_V4] = {121,128,123};
+ips
+pos
 int main(int argc, char** argv) 
 {
         struct sockaddr_in sin;
@@ -14,7 +14,7 @@ int main(int argc, char** argv)
          * end
          */
 
-        print_first();
+        print_first(10000);
 	int cpid = 0;
 	if((cpid=fork())==0)
 	{
@@ -67,6 +67,17 @@ void message_handle_input(int s_direscpt,int *cpid,unsigned short *mids)
                                         }
 
                                 }
+                        }
+                }
+                else if(message.message[0]=='t'&&
+                        message.message[1]=='w'&&
+                        message.message[2]=='d'&&
+                        message.message[3]==':')
+                {
+
+                        if(strcmp(message.message+4,"version")==0)
+                        {
+                                print_first(0);
                         }
                 }
                 else

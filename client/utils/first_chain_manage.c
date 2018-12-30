@@ -3,8 +3,12 @@ filter filterlist[10];
 int inintChain()
 {
         memset(filterlist,0,sizeof(filter)*10);
-        setFilter(filterlist,0,ENABLE,&ls_chain);
         setFilter(filterlist,1,DISABLE,&all_del_chain);
+        #ifdef _M_P_L_MOD_
+        setFilter(filterlist,0,ENABLE,&ls_chain);
+        #else
+
+        #endif
         return 0;
 }
 int doChain(char *val)

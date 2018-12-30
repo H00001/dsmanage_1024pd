@@ -8,6 +8,7 @@
 #include<sys/wait.h>
 #include<errno.h>
 #include <arpa/inet.h>
+#include"./utils/readconfig.h"
 void waittingforreceive(int socket_descriptor,struct sockaddr_in * sin);
 int inint__cd23(struct sockaddr_in *sin,int port);
 int isend_m(int socket_descriptor,unsigned const char * ip,int port,msg *message );

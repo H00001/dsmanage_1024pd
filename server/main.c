@@ -3,11 +3,9 @@ twc tc;
 int socket_descriptor;
 key_t uniquekey = 10000;
 static int msgid;
-int pdt[PDTLEN]; 
+int pdt[PDTLEN] ={0}; 
 int __main__init()
 {
-        memset(&tc,0,sizeof(tc));
-        memset(&pdt,0,sizeof(int)*PDTLEN); //inint pdt
         signal(SIGCHLD,&signalHandel);  //reigster the function that deal with defunct process
         signal(SIGHUP,&signalHandel);  //reigster the function that deal with defunct process
 	signal(SIGINT,&signalHandel);  //reigster the function that deal with ctrl_c request

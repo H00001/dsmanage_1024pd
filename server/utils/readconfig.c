@@ -1,15 +1,14 @@
 #include "readconfig.h"
 int readconfig(char * path, twc* config)
 {
+        memset(config,0,sizeof(twc));
 	FILE * fp;
 	unsigned char buffer[BUFFERREDLEN] = { 0 };
-        unsigned char param[20] = { 0 };
      	fp = fopen(path, "r");
      	if (fp == NULL)
 	{
 		return 2;
 	}
-        char *p = NULL;
         int serverl = 0;
     	while (fgets((char *)buffer, BUFFERREDLEN, fp) != NULL) {
                 trim((char *)buffer);
@@ -19,27 +18,22 @@ int readconfig(char * path, twc* config)
 		else
 		{
                         
-			if(strstr((const char *)buffer,LPORT)!=NULL)
+			if(!startwith((const char *)buffer ,LPORT))
 			{
-			        strncpy((char *)param,(const char *)buffer+strlen(LPORT),strlen((const char *)buffer)-strlen(LPORT));	
-                                config->lport = atoi((const char *)param);
+                                config->lport = atoi((const char *)(buffer+strlen(LPORT)));
 			}
-			else if(strstr((const char *)buffer,SPORT)!=NULL)
+
+			else if(!startwith((const char *)buffer,SPORT))
 			{
-			        strncpy((char *)param,(const char *)buffer+strlen(SPORT),strlen((const char *)buffer)-strlen(SPORT));	
-                                config->sport = atoi((const char *)param);
+                                config->sport = atoi((const char *)(buffer+strlen(SPORT)));
                         }
-                       
-			else if(strstr((const char *)buffer,CLIID)!=NULL)
+			else if(!startwith((const char *)buffer,CLIID))
 			{
-			        strncpy((char *)param,(const char *)buffer+strlen(CLIID),strlen((const char *)buffer)-strlen(CLIID));	
-                                config->client_id = (unsigned int)atoi((const char *)param);
+                                config->client_id = (unsigned int)atoi((const char *)(buffer+strlen(CLIID)));
                         }
-		else if(strstr((const char *)buffer,SERVER)!=NULL)
+		        else if(!startwith((const char *)buffer,SERVER))
 			{
-			        strncpy((char *)param,(const char *)buffer+strlen(SERVER),strlen((const char *)buffer)-strlen(SERVER));	
-                                memcpy(config->server_v4[serverl],param,16);
-                                //there have a buffer ,config->server_v4 could out of bound
+                                memcpy(config->server_v4[serverl],buffer+strlen(SERVER),15);
                                 serverl ++;
                         }
                 
@@ -47,7 +41,6 @@ int readconfig(char * path, twc* config)
                         }
 		}
                 
-       		memset(param,0,BUFFERREDLEN); 
        		memset(buffer,0,BUFFERREDLEN); 
      	}
 

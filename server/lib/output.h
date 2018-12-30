@@ -17,4 +17,4 @@ void print_sw(int isput,puttype __sw,char * __message);
 
 void print_error(int errorcode);
 
-void print_first();
+void print_first(int minlon);

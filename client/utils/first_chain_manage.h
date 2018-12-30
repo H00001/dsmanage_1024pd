@@ -1,6 +1,7 @@
 #include<string.h>
 #define ENABLE 0x00000001
 #define DISABLE 0x00000000
+#include "includemode.h"
 typedef struct chain_filter
 {
         int (* chin)(char *);
