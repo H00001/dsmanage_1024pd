@@ -30,4 +30,4 @@ typedef struct  twd1024_config
 
 }twc;
 
-int readconfig(char * path, twc* config);
+int8_t readconfig(char * path, twc* config);

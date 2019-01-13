@@ -3,8 +3,8 @@ twc tc;
 int socket_descriptor;
 key_t uniquekey = 10000;
 static int msgid;
-int pdt[PDTLEN] ={0}; 
-int __main__init()
+uint32_t pdt[PDTLEN] ={0}; 
+int8_t __main__init()
 {
         signal(SIGCHLD,&signalHandel);  //reigster the function that deal with defunct process
         signal(SIGHUP,&signalHandel);  //reigster the function that deal with defunct process
@@ -94,9 +94,9 @@ int main() {
 int message_deal_Hander(int sockdscp,unsigned char * buffer,char *pathm,struct in_addr aip,short int port)
 {
         char * ip = inet_ntoa(aip);
-	msg message;
+	msg message = {0,{0},0,{0},{0}};
         char type_std[10] = {0};
-        inint(&message);
+        //inint(&message);
 	changeTomsg(buffer,&message);
         if(message.clientid!=tc.client_id)
         {

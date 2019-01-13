@@ -1,5 +1,5 @@
 #include "readconfig.h"
-int readconfig(char * path, twc* config)
+int8_t readconfig(char * path, twc* config)
 {
         memset(config,0,sizeof(twc));
 	FILE * fp;
