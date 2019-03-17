@@ -4,6 +4,8 @@
 #include <signal.h>
 #include <sys/wait.h>
 #include <string.h>
+#include "std/is_alive.h"
+#include "support.h"
 #include "lib/oncesend.h"
 #include "lib/output.h"
 #include "utils/readconfig.h"
@@ -17,3 +19,4 @@ void writeValWithStatus(msg* __msg__, int status);
 void signalHandel(int signo);
 int message_deal_Hander(int sockdscp,unsigned char * buffer,char *pathm,struct in_addr aip,short int port);
 int sendConIno_(int desc, unsigned char *__ip,int __port, int type,int client_id_12bf);
+int init_std_function(func_map * mapping);

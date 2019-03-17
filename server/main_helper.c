@@ -53,4 +53,8 @@ int sendConIno_(int desc, unsigned char *__ip,int __port, int type,int client_id
         free(inmsg);
         return 0;
 }
-
+int init_std_function(func_map * mapping)
+{
+	mapping[0].name = "who";
+	mapping[0].funx = is_alive; 
+}

@@ -36,16 +36,16 @@ int main() {
                 exit(-1);
         }
         unsigned char buffer[MESSAGEIDLEN+OPTIONLEN+MESSAGELEN+3];
+	func_map mapping[10];
+	if(init_std_function(mapping)<0)
+	{
+                exit(-3);
+	}		
         socket_descriptor = inint__cd23(&sin,tc.lport);
-        if(sin_len==-2)
+        if(sin_len<0)
         {
                 print_error(__PORT_HAS_BEEN_USE__);
-	        return -2;
-        }
-        if(sin_len==-1)
-        {
-                print_error(__PORT_HAS_BEEN_USE__);
-	        return -2;
+	        return sin_len;
         }
         else
         {
@@ -140,6 +140,7 @@ int message_deal_Hander(int sockdscp,unsigned char * buffer,char *pathm,struct i
 		}
                 else if(message.code==(REQUEST|ISALIVE))
                 {
+
                         strcpy(type_std,"alive");
                         sendConIno_(sockdscp,ip,port,0,tc.client_id);
                 }
@@ -152,3 +153,4 @@ int message_deal_Hander(int sockdscp,unsigned char * buffer,char *pathm,struct i
 	return 0;
 
 }
+
