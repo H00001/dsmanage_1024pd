@@ -1,6 +1,6 @@
-#network control protocol<br>
-     created by frank albert<br>
-     the stand is this:<nr>
+# network control protocol
+     created by frank albert
+     the stand is this:
         +--------+----------------+--------+--------------+-------------+----------+
 fileds: | cli id |   message id   |  code  |    option    |   message   | end flag |
         +--------+----------------+--------+--------------+-------------+----------*
