@@ -1,17 +1,17 @@
 # network control protocol
-created by frank albert
+created by @frank 
 the stand is this:
         +--------+----------------+--------+--------------+-------------+----------+
 fileds: | cli id |   message id   |  code  |    option    |   message   | end flag |
         +--------+----------------+--------+--------------+-------------+----------*
 length: |<- 1B ->|<-     2B     ->|<- 1B ->|<-    4B    ->|<- 0-1022B ->|<-  2B  ->|
 
-   client id :client id ,every host has an unique id .             
+   client id :client id, every host has an unique id.             
               it was calculatored by mac address and unix
               time.                                             
    message id:it was created by server. the server send the 
               message id to the client. when the client resonse 
-              the control message ,use the same message id      
+              the control message, use the same message id      
               to response to the server.
    code      :message type
               the message is defined follow:
@@ -40,8 +40,8 @@ length: |<- 1B ->|<-     2B     ->|<- 1B ->|<-    4B    ->|<- 0-1022B ->|<-  2B 
     
    option    :retain now
 
-   message   :message if the pdu is a request pdu, it is the shell 
-              command or other.if the pdu is the resonse pdu ,it is
+   message   :Message if the pdu is a request pdu, it is the shell 
+              command or other. If the pdu is the resonse pdu, it is
               the result string.
    end flag  :0xAA55
     copyright 2015-2017 dosdrtt Co,. Ltd user:albert commuinsm           
